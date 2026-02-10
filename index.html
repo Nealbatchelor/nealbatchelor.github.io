@@ -173,7 +173,7 @@
                 <span class="text-liquid-blue">Portfolio</span>
             </h1>
             <p class="text-xl text-slate-300 max-w-2xl mb-10 leading-relaxed">
-                Specializing in CAD design, finite element analysis (FEA), and rapid prototyping. Bridging the gap between theoretical physics and functional reality.
+                Specialising in Quality Engineering, CAD design, finite element analysis (FEA), and rapid prototyping. Well experienced with continuous improvement cycles and root cause analysis.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
                 <a href="#projects" class="btn-liquid-bounce  px-8 py-4 bg-white text-eng-900 rounded-lg font-bold hover:bg-eng-50 transition-all shadow-xl shadow-white/10 flex items-center justify-center gap-2 group">
@@ -316,10 +316,28 @@ saxophone, having volunteered in a local community orchestra and band.
         <!-- The Sticky Viewport -->
         <div class="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
             
-            <!-- Background Title -->
-            <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-                <h2 class="text-[15vw] font-bold text-slate-800 opacity-20 select-none">ASSEMBLY</h2>
-            </div>
+            <!-- Background Title (SVG Scaled) -->
+<div class="absolute inset-0 flex flex-col justify-center items-center z-0 pointer-events-none select-none text-slate-800 opacity-80">
+    
+    <!-- 1. SOLAR -->
+    <!-- viewBox="0 0 420 100" defines the bounding box of the text. 
+         w-full stretches that box to the screen edges. -->
+    <svg width="100%" height="auto" viewBox="0 0 420 100" class="w-full block">
+        <text x="50%" y="85" text-anchor="middle" font-family="sans-serif" font-weight="900" font-size="100" fill="currentColor">
+            SOLAR
+        </text>
+    </svg>
+
+    <!-- 2. TRACKER -->
+    <!-- viewBox="0 0 600 100" is wider because the word is longer.
+         When stretched to w-full, the text shrinks to fit. -->
+    <svg width="100%" height="auto" viewBox="0 0 600 100" class="w-full block -mt-[2%]">
+        <text x="50%" y="85" text-anchor="middle" font-family="sans-serif" font-weight="900" font-size="100" fill="currentColor">
+            TRACKER
+        </text>
+    </svg>
+
+</div>
 
             <!-- The 3D Model -->
             <!-- Note: interaction-prompt="none" stops the hand animation -->
@@ -328,7 +346,7 @@ saxophone, having volunteered in a local community orchestra and band.
                 id="scroll-model"
                 src="https://cdn.jsdelivr.net/gh/Nealbatchelor/portfolioassets/Rot_track-v1.glb" 
                 alt="Exploded View"
-                camera-orbit="0deg 75deg 4m"
+                camera-orbit="0deg 75deg 150%"
                 shadow-intensity="2"
                 environment-image="neutral"
                 interaction-prompt="none" 
@@ -636,7 +654,7 @@ saxophone, having volunteered in a local community orchestra and band.
                             <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded">2017-2024</span>
                         </div>
                         <div class="text-sm font-medium text-slate-500 mb-3">Northampton Academy</div>
-                        <p class="text-slate-600 text-sm leading-relaxed">A-Levels in Maths, Further Maths, Physics</p>
+                        <p class="text-slate-600 text-sm leading-relaxed">A-Levels in Maths, Further Maths & Physics</p>
                         <p class="text-slate-600 text-sm leading-relaxed">EPQ in Motorsport safety</p>
                         <p class="text-slate-600 text-sm leading-relaxed">Achieved nine grade 9s at GCSE</p>
                     </div>
@@ -654,8 +672,8 @@ saxophone, having volunteered in a local community orchestra and band.
                     <div class="p-12 text-white flex flex-col justify-between relative overflow-hidden">
                         <div class="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-eng-500 rounded-full blur-3xl opacity-20"></div>
                         <div>
-                            <h2 class="text-3xl font-bold mb-6">Let's build something together.</h2>
-                            <p class="text-eng-100 mb-12 text-lg">I'm currently available for freelance projects and consulting roles. Drop me a line if you have a project in mind.</p>
+                            <h2 class="text-3xl font-bold mb-6">Feel free to reach out</h2>
+                            <p class="text-eng-100 mb-12 text-lg">I am always seeking to gain more industry experience & always happy to share my experiences with others.</p>
                             
                             <div class="space-y-6">
                                 <div class="flex items-center gap-4">
@@ -688,17 +706,28 @@ saxophone, having volunteered in a local community orchestra and band.
                             </div>
                         </div>
 
-                        <div class="flex gap-4 mt-12">
-                            <a href="#" class="w-10 h-10 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
-                                <i data-lucide="linkedin" class="w-5 h-5"></i>
-                            </a>
-                            <a href="#" class="w-10 h-10 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
-                                <i data-lucide="github" class="w-5 h-5"></i>
-                            </a>
-                            <a href="#" class="w-10 h-10 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
-                                <i data-lucide="twitter" class="w-5 h-5"></i>
-                            </a>
-                        </div>
+                        <!-- Social Media Links -->
+<div class="flex gap-4 mt-12">
+    
+    <!-- 1. LinkedIn -->
+    <a href="https://www.linkedin.com/in/nealbatchelor/" target="_blank" rel="noopener noreferrer" 
+       class="w-10 h-10 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all hover:scale-110">
+        <i data-lucide="linkedin" class="w-5 h-5 text-white"></i>
+    </a>
+
+    <!-- 2. GitHub (I added your username here based on your repo) -->
+    <a href="https://github.com/Nealbatchelor" target="_blank" rel="noopener noreferrer"
+       class="w-10 h-10 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all hover:scale-110">
+        <i data-lucide="github" class="w-5 h-5 text-white"></i>
+    </a>
+
+    <!-- 3. Instagram (Replaces Twitter) -->
+    <a href="https://www.instagram.com/nealbatchelor_" target="_blank" rel="noopener noreferrer"
+       class="w-10 h-10 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all hover:scale-110">
+        <i data-lucide="instagram" class="w-5 h-5 text-white"></i>
+    </a>
+
+</div>
                     </div>
 
                     <div class="bg-white p-12">
@@ -713,7 +742,7 @@ saxophone, having volunteered in a local community orchestra and band.
                             </div>
                             <div>
                                 <label for="message" class="block text-sm font-medium text-slate-700 mb-2">Message</label>
-                                <textarea id="message" rows="4" class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-eng-500 focus:ring-2 focus:ring-eng-200 outline-none transition-all" placeholder="Tell me about your project..."></textarea>
+                                <textarea id="message" rows="4" class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-eng-500 focus:ring-2 focus:ring-eng-200 outline-none transition-all" placeholder="I aim to respond ASAP..."></textarea>
                             </div>
                             <button type="submit" class="w-full bg-eng-900 text-white font-bold py-4 rounded-lg hover:bg-eng-800 transition-colors shadow-lg shadow-eng-900/10">
                                 Send Message
@@ -1048,7 +1077,7 @@ saxophone, having volunteered in a local community orchestra and band.
         
         // Apply to model
         // Format: "theta phi radius"
-        scrollModel.cameraOrbit = `${theta}deg 75deg 4m`;
+        scrollModel.cameraOrbit = `${theta}deg 75deg 150%`;
 
         // 3. Update Progress Bar
         if (rotProgress) {
