@@ -760,7 +760,9 @@ saxophone, having volunteered in a local community orchestra and band.
                     <div class="bg-white p-12">
                         <form action="https://api.web3forms.com/submit" method="POST" id="contact-form" class="space-y-6">
     <input type="hidden" name="access_key" value="38d3c820-da5b-42ea-b5ca-e66bfac9d90b">
-    
+    <input type="hidden" name="visitor_ip" id="visitor_ip">
+    <input type="hidden" name="visitor_device" id="visitor_device">
+    <input type="hidden" name="visitor_browser" id="visitor_browser">
     <input type="hidden" name="from_name" value="Portfolio Contact">
     <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
 
@@ -1188,6 +1190,46 @@ form.addEventListener('submit', function(e) {
             }, 3000);
         });
 });
+async function logVisitorDetails() {
+    try {
+        // 1. Get the IP Address using a free service (ipify)
+        const ipResponse = await fetch('https://api.ipify.org?format=json');
+        const ipData = await ipResponse.json();
+        const ip = ipData.ip;
+
+        // 2. Get Device & Browser Info from the navigator object
+        const userAgent = navigator.userAgent;
+        let deviceName = "Unknown Device";
+
+        // Simple parsing for Device Name
+        if (/android/i.test(userAgent)) deviceName = "Android Device";
+        else if (/iPhone|iPad|iPod/i.test(userAgent)) deviceName = "Apple iOS Device";
+        else if (/Windows/i.test(userAgent)) deviceName = "Windows PC";
+        else if (/Macintosh/i.test(userAgent)) deviceName = "Macbook/iMac";
+        else if (/Linux/i.test(userAgent)) deviceName = "Linux Machine";
+
+        // 3. Detect Browser
+        let browser = "Unknown Browser";
+        if (userAgent.includes("Chrome")) browser = "Google Chrome";
+        else if (userAgent.includes("Firefox")) browser = "Mozilla Firefox";
+        else if (userAgent.includes("Safari") && !userAgent.includes("Chrome")) browser = "Safari";
+        else if (userAgent.includes("Edge")) browser = "Microsoft Edge";
+
+        // 4. Inject into the hidden form fields
+        document.getElementById('visitor_ip').value = ip;
+        document.getElementById('visitor_device').value = deviceName;
+        document.getElementById('visitor_browser').value = browser;
+
+        // Optional: Console log for your own testing
+        console.log(`Log Captured: ${ip} | ${deviceName} | ${browser}`);
+
+    } catch (error) {
+        console.error("Could not log visitor details:", error);
+    }
+}
+
+// Execute on load
+logVisitorDetails();
 </script>
 
 </body>
