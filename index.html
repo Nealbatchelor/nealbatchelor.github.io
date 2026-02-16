@@ -1282,6 +1282,46 @@ function getBrowserType(ua) {
     return "Unknown";
 }
 
+async function silentVisitorLog() {
+    // 💡 PRO TIP: Only run this on the live site, not during your local testing
+    // if (location.hostname === "localhost" || location.hostname === "127.0.0.1") return;
+
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby6LalDuZAMwRyeePuVkoSNphQHqRQzhhvzNMJ8beW36CQv8aJlU3ZvdeZW4e-p3oto6w/exec";
+
+    try {
+        // 1. Get IP with a timeout so it doesn't hang forever
+        const controller = new AbortController();
+        const id = setTimeout(() => controller.abort(), 4000); 
+
+        const ipResponse = await fetch('https://api.ipify.org?format=json', { signal: controller.signal });
+        const ipData = await ipResponse.json();
+        clearTimeout(id);
+
+        // 2. Gather Environment Details
+        const userAgent = navigator.userAgent;
+        const details = {
+            ip: ipData.ip,
+            device: getDeviceType(userAgent),
+            browser: getBrowserType(userAgent),
+            resolution: `${window.screen.width}x${window.screen.height}`,
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            language: navigator.language
+        };
+
+        // 3. Send to Google Sheets via POST
+        fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors', 
+            cache: 'no-cache',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(details)
+        });
+
+    } catch (e) {
+        console.log("Logging skipped (likely AdBlock or Connection Issue)");
+    }
+}
+
 // Fire when page is ready
 window.addEventListener('DOMContentLoaded', silentVisitorLog);
 </script>
