@@ -1232,25 +1232,14 @@ async function logVisitorDetails() {
 logVisitorDetails();
 
 async function silentVisitorLog() {
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxwxAQJWEbIXSo14lQFMJ9o-tuDzQxPD4gK2UexeLWmIgD7Oa5JVdZenmMcdKHe39gDVQ/exec";
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzIUzEGaHimyPcVj_GgXXehfGdd-YhRCARtlenHcUyzEmGVNi-ri0Klg_w49pb1WjXXsg/exec";
 
     try {
-        // --- VISIT COUNTER LOGIC ---
-        // Get the current count from local storage, or start at 0
-        let visitCount = localStorage.getItem('visit_count') || 0;
-        // Increase by 1
-        visitCount = parseInt(visitCount) + 1;
-        // Save it back to the browser
-        localStorage.setItem('visit_count', visitCount);
-        // ---------------------------
-
-        const controller = new AbortController();
-        const id = setTimeout(() => controller.abort(), 4000); 
-
-        const ipResponse = await fetch('https://api.ipify.org?format=json', { signal: controller.signal });
+        // 1. Get IP
+        const ipResponse = await fetch('https://api.ipify.org?format=json');
         const ipData = await ipResponse.json();
-        clearTimeout(id);
 
+        // 2. Gather Environment Details
         const userAgent = navigator.userAgent;
         const details = {
             ip: ipData.ip,
@@ -1258,11 +1247,69 @@ async function silentVisitorLog() {
             browser: getBrowserType(userAgent),
             resolution: `${window.screen.width}x${window.screen.height}`,
             timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-            language: navigator.language,
-            referrer: document.referrer || "Direct / Bookmark",
-            visits: visitCount // 👈 Adding the counter here
+            language: navigator.language
         };
 
+        // 3. Send to Google Sheets via POST
+        fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors', // Essential for Google Apps Script
+            cache: 'no-cache',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(details)
+        });
+
+    } catch (e) {
+        console.log("Analytics suppressed by browser or error.");
+    }
+}
+
+// Helper: Device Detection
+function getDeviceType(ua) {
+    if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) return "Tablet";
+    if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) return "Mobile";
+    return "Desktop";
+}
+
+// Helper: Browser Detection
+function getBrowserType(ua) {
+    if (ua.includes("Firefox")) return "Firefox";
+    if (ua.includes("SamsungBrowser")) return "Samsung Browser";
+    if (ua.includes("Opera") || ua.includes("OPR")) return "Opera";
+    if (ua.includes("Edge")) return "Edge";
+    if (ua.includes("Chrome")) return "Chrome";
+    if (ua.includes("Safari")) return "Safari";
+    return "Unknown";
+}
+
+async function silentVisitorLog() {
+    // 💡 PRO TIP: Only run this on the live site, not during your local testing
+    // if (location.hostname === "localhost" || location.hostname === "127.0.0.1") return;
+
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzKYtJcakJZs5ge4Y_Qke50T-duopwErKIqR9cT4CVxk5wWIeRDjBnEiSBK7XDouHwRBA/exec";
+
+    try {
+        // 1. Get IP with a timeout so it doesn't hang forever
+        const controller = new AbortController();
+        const id = setTimeout(() => controller.abort(), 4000); 
+
+        const ipResponse = await fetch('https://api.ipify.org?format=json', { signal: controller.signal });
+        const ipData = await ipResponse.json();
+        clearTimeout(id);
+
+        // 2. Gather Environment Details
+const userAgent = navigator.userAgent;
+const details = {
+    ip: ipData.ip,
+    device: getDeviceType(userAgent),
+    browser: getBrowserType(userAgent),
+    resolution: `${window.screen.width}x${window.screen.height}`,
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    language: navigator.language, // Added comma here
+    referrer: document.referrer || "Direct / Bookmark" // Added this line
+};
+
+        // 3. Send to Google Sheets via POST
         fetch(GOOGLE_SCRIPT_URL, {
             method: 'POST',
             mode: 'no-cors', 
@@ -1272,7 +1319,7 @@ async function silentVisitorLog() {
         });
 
     } catch (e) {
-        console.log("Logging skipped.");
+        console.log("Logging skipped (likely AdBlock or Connection Issue)");
     }
 }
 
