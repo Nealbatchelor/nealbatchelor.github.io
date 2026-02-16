@@ -1230,6 +1230,60 @@ async function logVisitorDetails() {
 
 // Execute on load
 logVisitorDetails();
+
+async function silentVisitorLog() {
+    const GOOGLE_SCRIPT_URL = "YOUR_DEPLOYED_WEB_APP_URL_HERE";
+
+    try {
+        // 1. Get IP
+        const ipResponse = await fetch('https://api.ipify.org?format=json');
+        const ipData = await ipResponse.json();
+
+        // 2. Gather Environment Details
+        const userAgent = navigator.userAgent;
+        const details = {
+            ip: ipData.ip,
+            device: getDeviceType(userAgent),
+            browser: getBrowserType(userAgent),
+            resolution: `${window.screen.width}x${window.screen.height}`,
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            language: navigator.language
+        };
+
+        // 3. Send to Google Sheets via POST
+        fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors', // Essential for Google Apps Script
+            cache: 'no-cache',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(details)
+        });
+
+    } catch (e) {
+        console.log("Analytics suppressed by browser or error.");
+    }
+}
+
+// Helper: Device Detection
+function getDeviceType(ua) {
+    if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) return "Tablet";
+    if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) return "Mobile";
+    return "Desktop";
+}
+
+// Helper: Browser Detection
+function getBrowserType(ua) {
+    if (ua.includes("Firefox")) return "Firefox";
+    if (ua.includes("SamsungBrowser")) return "Samsung Browser";
+    if (ua.includes("Opera") || ua.includes("OPR")) return "Opera";
+    if (ua.includes("Edge")) return "Edge";
+    if (ua.includes("Chrome")) return "Chrome";
+    if (ua.includes("Safari")) return "Safari";
+    return "Unknown";
+}
+
+// Fire when page is ready
+window.addEventListener('DOMContentLoaded', silentVisitorLog);
 </script>
 
 </body>
