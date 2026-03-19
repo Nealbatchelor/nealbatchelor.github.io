@@ -445,7 +445,7 @@ saxophone, having volunteered in a local community orchestra and band.
                     </div>
                     <div class="h-2/5 p-8 flex flex-col justify-between">
                         <p class="text-slate-600 leading-relaxed">
-                            Designed, built and tested a mechanical exercise and entertainment system for dogs. System used a series of mechanical components to achieve this, including a Sprag Clutch, Torsional Spring, Rachet, Cam & Friction Brake.
+                            Designed, built and tested a mechanical exercise and entertainment system for dogs. System used a series of mechanical components to achieve this, including a Sprag Clutch, Clock Spring, Pillow Bearings, all along a central En8 steel shaft
                         </p>
                         <div class="flex justify-between items-end">
                             <div class="flex gap-2">
@@ -453,9 +453,9 @@ saxophone, having volunteered in a local community orchestra and band.
                                 <span class="px-3 py-1 bg-slate-100 text-slate-600 rounded text-sm font-bold">Rotary Systems</span>
                                 <span class="px-3 py-1 bg-slate-100 text-slate-600 rounded text-sm font-bold">Continuous Improvement Cycles</span>
                             </div>
-                            <a href="#" class="magnetic-btn w-12 h-12 rounded-full border border-slate-300 flex items-center justify-center hover:bg-eng-500 hover:text-white hover:border-eng-500 transition-all">
-                                <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                            </a>
+                            <a href="#" data-target="modal-proj-2" class="open-modal-btn magnetic-btn w-12 h-12 rounded-full border border-slate-300 flex items-center justify-center hover:bg-eng-500 hover:text-white hover:border-eng-500 transition-all">
+                                <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
+                            </a>    
                         </div>
                     </div>
                 </div>
@@ -529,8 +529,8 @@ saxophone, having volunteered in a local community orchestra and band.
                             <h3 class="font-bold text-slate-900 text-lg">Engineering Placement</h3>
                             <span class="text-xs font-semibold text-eng-600 bg-eng-50 px-2 py-1 rounded">Jul 2026 - Jul 2027</span>
                         </div>
-                        <div class="text-sm font-medium text-slate-500 mb-3">Unknown</div>
-                        <p class="text-slate-600 text-sm leading-relaxed">Industrial placement year</p>
+                        <div class="text-sm font-medium text-slate-500 mb-3">Honeywell</div>
+                        <p class="text-slate-600 text-sm leading-relaxed">-</p>
                     </div>
                 </div>
 
@@ -698,7 +698,94 @@ saxophone, having volunteered in a local community orchestra and band.
             <p class="text-slate-500 text-sm">© 2026 Neal Batchelor. All rights reserved.</p>
         </div>
     </footer>
+<div id="modal-proj-2" class="project-modal fixed inset-0 z-[100] hidden flex items-center justify-center p-4 sm:p-6">
+        
+        <div class="modal-backdrop absolute inset-0 bg-slate-900/60 backdrop-blur-md"></div>
 
+        <div class="modal-content-box relative w-full max-w-5xl max-h-[90vh] bg-white rounded-3xl shadow-2xl overflow-y-auto border border-slate-200 flex flex-col">
+            
+            <div class="sticky top-0 z-10 flex justify-between items-center p-6 bg-white/90 backdrop-blur border-b border-slate-100">
+                <div>
+                    
+                    <h2 class="text-2xl font-bold text-slate-900">Tug of Paw</h2>
+                    <span class="text-eng-500 font-bold uppercase tracking-wider text-xs">Dog Exercise & Entertainment System</span>
+                </div>
+                <button class="close-modal-btn p-2 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors">
+                    <i data-lucide="x" class="w-6 h-6 text-slate-600"></i>
+                </button>
+            </div>
+
+            <div class="p-6 sm:p-10 space-y-10">
+                <img src="https://raw.githubusercontent.com/Nealbatchelor/portfolioassets/main/VTOP.png" class="w-full h-[40vh] sm:h-[50vh] object-cover rounded-2xl border border-slate-200" alt="Tug of Paw Prototype">
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="md:col-span-2 space-y-8">
+                        
+                        <div>
+                            <h3 class="flex items-center gap-2 text-xl font-bold text-slate-900 mb-3">
+                                <i data-lucide="target" class="w-5 h-5 text-eng-500"></i> The Market Challenge
+                            </h3>
+                            <p class="text-slate-600 leading-relaxed">
+                                During the COVID-19 pandemic, UK pet adoptions surged. As owners returned to the office, dogs were left isolated for longer periods, leading to disruptive behaviours. Existing pulling toys on the market all require a human to be on the other end, providing the resistance for the dog to counter. There is no available self-automated tug-of-war system on the market. The aim was to design a mechanically adjustable device capable of independent, prolonged engagement while safely withstanding the dynamic loads of a lunging dog.
+                            </p>
+                        </div>
+                        
+                        <div>
+                            <h3 class="flex items-center gap-2 text-xl font-bold text-slate-900 mb-3">
+                                <i data-lucide="settings" class="w-5 h-5 text-eng-500"></i> Mechanical Solution
+                            </h3>
+                            <p class="text-slate-600 leading-relaxed mb-4">
+                                The 'Tug of Paw' is a wall-mounted mechanical system driven by a 12mm En8 steel shaft. To allow for independent play, the system utilises a <strong>torsional clock spring</strong> that stores potential energy when the dog pulls the dynamic climbing rope, automatically reeling the rope back in upon release. 
+                            </p>
+                            <p class="text-slate-600 leading-relaxed">
+                                To accommodate dogs of varying strengths, pulling resistance is generated by a mechanical friction brake clamped over a custom steel disc. Crucially, a <strong>CSK12PP Sprag Clutch (one-way bearing)</strong> is integrated into the shaft. This ensures the friction brake only applies resistance when the dog pulls, allowing the spring to retract the rope freely without fighting the brake's friction.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="flex items-center gap-2 text-xl font-bold text-slate-900 mb-3">
+                                <i data-lucide="bar-chart-2" class="w-5 h-5 text-eng-500"></i> FEA & Iterative Optimization
+                            </h3>
+                            <p class="text-slate-600 leading-relaxed">
+                                Following the Pahl and Beitz design methodology, rigorous FEA was conducted based on a 2000N dynamic load (simulating a 40kg dog lunging at 5m/s). 
+                                <br><br>
+                                <strong>Brake Disc:</strong> To ensure the spring could successfully retract the rope, the rotational inertia of the shaft components had to be minimised. Through topological optimisation, the brake disc's mass was reduced by 40% (550g to 332g), decreasing its moment of inertia by 37% while maintaining a minimum safety factor of 4.6.
+                                <br><br>
+                                <strong>Modular Hook:</strong> A custom carabiner-style hook was developed to allow owners to swap out toys. Initial FEA identified peak stresses of 26 GPa at the mounting hole. Through shape optimization, material was removed from low-stress regions and load distribution was improved, reducing base stress by 87%.
+                            </p>
+                        </div>
+
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                            <h4 class="font-bold text-slate-900 mb-4">Technical Specifications</h4>
+                            <ul class="space-y-3 text-sm text-slate-600">
+                                <li class="flex justify-between border-b border-slate-200 pb-2"><span>Design Method</span> <strong class="text-right">Pahl & Beitz</strong></li>
+                                <li class="flex justify-between border-b border-slate-200 pb-2"><span>Nominal Dynamic Load</span> <strong class="text-right">2000N</strong></li>
+                                <li class="flex justify-between border-b border-slate-200 pb-2"><span>Primary Shaft</span> <strong class="text-right">12mm En8 Steel</strong></li>
+                                <li class="flex justify-between border-b border-slate-200 pb-2"><span>Retraction</span> <strong class="text-right">Torsional Spring</strong></li>
+                                <li class="flex justify-between border-b border-slate-200 pb-2"><span>Resistance</span> <strong class="text-right">Friction Brake</strong></li>
+                                <li class="flex justify-between border-b border-slate-200 pb-2"><span>Directional Control</span> <strong class="text-right">Sprag Clutch</strong></li>
+                                <li class="flex justify-between"><span>Testing</span> <strong class="text-right">Fusion 360</strong></li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-eng-50 p-6 rounded-2xl border border-eng-100">
+                            <h4 class="font-bold text-eng-900 mb-2 flex items-center gap-2">
+                                <i data-lucide="pound-sterling" class="w-4 h-4"></i> DFM & Cost Savings
+                            </h4>
+                            <p class="text-sm text-eng-800 leading-relaxed">
+                                Early iterations were over-engineered with a 30mm shaft. By scaling the shaft down to 12mm after force calculations, bearing and clutch costs were reduced significantly, saving ~17% of the total project budget which was reallocated to higher-grade steel housing.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script>
         
         // Initialize Icons
@@ -1219,6 +1306,57 @@ const details = {
 
 // Fire when page is ready
 window.addEventListener('DOMContentLoaded', silentVisitorLog);
+// ==========================================
+// MODAL EXPANSION SYSTEM (GSAP)
+// ==========================================
+const modalBtns = document.querySelectorAll('.open-modal-btn');
+const closeBtns = document.querySelectorAll('.close-modal-btn');
+
+// OPEN MODAL
+modalBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault(); // Stop page jumping
+        
+        const targetId = btn.getAttribute('data-target');
+        const modal = document.getElementById(targetId);
+        if (!modal) return; // Failsafe
+        
+        const content = modal.querySelector('.modal-content-box');
+        const backdrop = modal.querySelector('.modal-backdrop');
+
+        // Unhide and lock scrolling
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; 
+
+        // Animate
+        gsap.fromTo(backdrop, { opacity: 0 }, { opacity: 1, duration: 0.4 });
+        gsap.fromTo(content, 
+            { opacity: 0, y: 50, scale: 0.95 }, 
+            { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.2)" }
+        );
+        
+        // Re-initialize Lucide icons inside the modal just in case
+        lucide.createIcons();
+    });
+});
+
+// CLOSE MODAL
+closeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const modal = btn.closest('.project-modal');
+        const content = modal.querySelector('.modal-content-box');
+        const backdrop = modal.querySelector('.modal-backdrop');
+
+        // Animate Out
+        gsap.to(content, { opacity: 0, y: 30, scale: 0.95, duration: 0.3, ease: "power2.in" });
+        gsap.to(backdrop, { 
+            opacity: 0, duration: 0.3, delay: 0.1, onComplete: () => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = ''; // Unlock scrolling
+            }
+        });
+    });
+});
 </script>
 
 </body>
