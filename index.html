@@ -169,6 +169,11 @@
 
 <body class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 antialiased selection:bg-eng-500 selection:text-white overflow-x-hidden">
     <div id="scroll-progress" class="fixed top-0 left-0 h-1.5 bg-eng-500 z-[100] transition-all duration-75 ease-out shadow-[0_0_10px_rgba(14,165,233,0.5)]" style="width: 0%"></div>
+    <!-- back to top button -->
+    <button id="back-to-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" aria-label="Back to top"
+        class="fixed bottom-6 right-6 z-50 w-11 h-11 rounded-full bg-slate-900 border border-eng-500 text-eng-400 flex items-center justify-center shadow-lg opacity-0 pointer-events-none transition-opacity duration-300 hover:bg-eng-500 hover:text-white">
+        <i data-lucide="arrow-up" class="w-5 h-5"></i>
+    </button>
     <nav id="main-nav" class="fixed w-full bg-white/90 backdrop-blur-md shadow-sm z-50 border-b border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
@@ -337,14 +342,12 @@ saxophone, having volunteered in a local community orchestra and band.
                         </div>
                     </div>
 
-                    <!-- opens CV PDF in a new tab -->
+                    <!-- opens CV preview modal -->
 <div class="mt-10">
-    <a href="./Neal Batchelor.pdf"
-       target="_blank"
-       class="btn-liquid-bounce magnetic-btn text-eng-600 dark:text-eng-400 font-bold hover:text-eng-800 inline-flex items-center gap-2 px-4 py-2 border-2 border-eng-600 dark:border-eng-400 rounded-lg transition-colors hover:bg-eng-50 dark:hover:bg-slate-800">
-        Download Resume / CV
+    <button id="open-cv-modal" class="btn-liquid-bounce magnetic-btn text-eng-600 dark:text-eng-400 font-bold hover:text-eng-800 inline-flex items-center gap-2 px-4 py-2 border-2 border-eng-600 dark:border-eng-400 rounded-lg transition-colors hover:bg-eng-50 dark:hover:bg-slate-800">
+        View Resume / CV
         <i data-lucide="file-text" class="w-4 h-4"></i>
-    </a>
+    </button>
 </div>
                 </div>
             </div>
@@ -687,9 +690,6 @@ saxophone, having volunteered in a local community orchestra and band.
                     <div class="bg-white dark:bg-slate-800 p-6 md:p-12">
                         <form action="https://api.web3forms.com/submit" method="POST" id="contact-form" class="space-y-6">
     <input type="hidden" name="access_key" value="38d3c820-da5b-42ea-b5ca-e66bfac9d90b">
-    <input type="hidden" name="visitor_ip" id="visitor_ip">
-    <input type="hidden" name="visitor_device" id="visitor_device">
-    <input type="hidden" name="visitor_browser" id="visitor_browser">
     <input type="hidden" name="from_name" value="Portfolio Contact">
     <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
 
@@ -817,6 +817,30 @@ saxophone, having volunteered in a local community orchestra and band.
             </div>
         </div>
     </div>
+
+<!-- modal: CV preview -->
+<div id="modal-cv" class="project-modal fixed inset-0 z-[100] hidden flex items-center justify-center p-4 sm:p-6">
+    <div class="modal-backdrop absolute inset-0 bg-slate-900/60 backdrop-blur-md"></div>
+    <div class="modal-content-box relative w-full max-w-4xl bg-white dark:bg-slate-800 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-700 flex flex-col" style="height: 90vh;">
+        <div class="sticky top-0 z-10 flex justify-between items-center p-6 bg-white/90 dark:bg-slate-800/90 backdrop-blur border-b border-slate-100 dark:border-slate-700 rounded-t-3xl">
+            <div>
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white">Neal Batchelor</h2>
+                <span class="text-eng-500 font-bold uppercase tracking-wider text-xs">Resume / CV</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="./Neal Batchelor.pdf" download class="inline-flex items-center gap-2 px-4 py-2 bg-eng-500 text-white text-sm font-semibold rounded-lg hover:bg-eng-600 transition-colors">
+                    <i data-lucide="download" class="w-4 h-4"></i> Download
+                </a>
+                <button id="close-cv-modal" class="p-2 bg-slate-100 dark:bg-slate-700 rounded-full hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+                    <i data-lucide="x" class="w-5 h-5 text-slate-600 dark:text-slate-300"></i>
+                </button>
+            </div>
+        </div>
+        <div class="flex-1 overflow-hidden rounded-b-3xl">
+            <iframe src="./Neal Batchelor.pdf" class="w-full h-full border-0 rounded-b-3xl" title="Neal Batchelor CV"></iframe>
+        </div>
+    </div>
+</div>
 
 <!-- modal: self-balancing robot -->
 <div id="modal-proj-1" class="project-modal fixed inset-0 z-[100] hidden flex items-center justify-center p-4 sm:p-6">
@@ -1112,6 +1136,7 @@ saxophone, having volunteered in a local community orchestra and band.
     });
     // cache scroll-dependent element refs
     const scrollProgress  = document.getElementById("scroll-progress");
+    const backToTop       = document.getElementById("back-to-top");
     const stickySection   = document.querySelector('#projects');
     const track           = document.querySelector('#gallery-track');
     const progressBar     = document.querySelector('#gallery-progress');
@@ -1141,6 +1166,11 @@ saxophone, having volunteered in a local community orchestra and band.
 
         // page progress bar
         scrollProgress.style.width = (scrollY / docH * 100) + "%";
+
+        // back-to-top visibility
+        const show = scrollY > 400;
+        backToTop.style.opacity        = show ? '1' : '0';
+        backToTop.style.pointerEvents  = show ? 'auto' : 'none';
 
         // gallery horizontal scroll
         if (stickySection) {
@@ -1426,98 +1456,33 @@ form.addEventListener('submit', function(e) {
             }, 3000);
         });
 });
-// collects IP, device, and browser info and injects them into the contact form hidden fields
-async function logVisitorDetails() {
-    try {
-        const ipResponse = await fetch('https://api.ipify.org?format=json');
-        const ipData = await ipResponse.json();
-        const ip = ipData.ip;
+// CV preview modal
+const cvModal    = document.getElementById('modal-cv');
+const cvContent  = cvModal.querySelector('.modal-content-box');
+const cvBackdrop = cvModal.querySelector('.modal-backdrop');
 
-        const userAgent = navigator.userAgent;
-        let deviceName = "Unknown Device";
+document.getElementById('open-cv-modal').addEventListener('click', () => {
+    cvModal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    gsap.fromTo(cvBackdrop, { opacity: 0 }, { opacity: 1, duration: 0.4 });
+    gsap.fromTo(cvContent,
+        { opacity: 0, y: 50, scale: 0.95 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: 'back.out(1.2)' }
+    );
+});
 
-        if (/android/i.test(userAgent)) deviceName = "Android Device";
-        else if (/iPhone|iPad|iPod/i.test(userAgent)) deviceName = "Apple iOS Device";
-        else if (/Windows/i.test(userAgent)) deviceName = "Windows PC";
-        else if (/Macintosh/i.test(userAgent)) deviceName = "Macbook/iMac";
-        else if (/Linux/i.test(userAgent)) deviceName = "Linux Machine";
+document.getElementById('close-cv-modal').addEventListener('click', () => {
+    gsap.to(cvContent,  { opacity: 0, y: 30, scale: 0.95, duration: 0.3, ease: 'power2.in' });
+    gsap.to(cvBackdrop, { opacity: 0, duration: 0.3, delay: 0.1, onComplete: () => {
+        cvModal.classList.add('hidden');
+        document.body.style.overflow = '';
+    }});
+});
 
-        let browser = "Unknown Browser";
-        if (userAgent.includes("Chrome")) browser = "Google Chrome";
-        else if (userAgent.includes("Firefox")) browser = "Mozilla Firefox";
-        else if (userAgent.includes("Safari") && !userAgent.includes("Chrome")) browser = "Safari";
-        else if (userAgent.includes("Edge")) browser = "Microsoft Edge";
+cvBackdrop.addEventListener('click', () => {
+    document.getElementById('close-cv-modal').click();
+});
 
-        document.getElementById('visitor_ip').value = ip;
-        document.getElementById('visitor_device').value = deviceName;
-        document.getElementById('visitor_browser').value = browser;
-
-        console.log(`Log Captured: ${ip} | ${deviceName} | ${browser}`);
-
-    } catch (error) {
-        console.error("Could not log visitor details:", error);
-    }
-}
-
-logVisitorDetails();
-
-function getDeviceType(ua) {
-    if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) return "Tablet";
-    if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) return "Mobile";
-    return "Desktop";
-}
-
-function getBrowserType(ua) {
-    if (ua.includes("Firefox")) return "Firefox";
-    if (ua.includes("SamsungBrowser")) return "Samsung Browser";
-    if (ua.includes("Opera") || ua.includes("OPR")) return "Opera";
-    if (ua.includes("Edge")) return "Edge";
-    if (ua.includes("Chrome")) return "Chrome";
-    if (ua.includes("Safari")) return "Safari";
-    return "Unknown";
-}
-
-//  logs each page visit to a Google Sheet
-async function silentVisitorLog() {
-    // uncomment to skip logging on localhost:
-    // if (location.hostname === "localhost" || location.hostname === "127.0.0.1") return;
-
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzKYtJcakJZs5ge4Y_Qke50T-duopwErKIqR9cT4CVxk5wWIeRDjBnEiSBK7XDouHwRBA/exec";
-
-    try {
-        // 4s timeout in case ipify is slow
-        const controller = new AbortController();
-        const id = setTimeout(() => controller.abort(), 4000);
-
-        const ipResponse = await fetch('https://api.ipify.org?format=json', { signal: controller.signal });
-        const ipData = await ipResponse.json();
-        clearTimeout(id);
-
-const userAgent = navigator.userAgent;
-const details = {
-    ip: ipData.ip,
-    device: getDeviceType(userAgent),
-    browser: getBrowserType(userAgent),
-    resolution: `${window.screen.width}x${window.screen.height}`,
-    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    language: navigator.language,
-    referrer: document.referrer || "Direct / Bookmark"
-};
-
-        fetch(GOOGLE_SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            cache: 'no-cache',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(details)
-        });
-
-    } catch (e) {
-        console.log("Logging skipped (likely AdBlock or Connection Issue)");
-    }
-}
-
-window.addEventListener('DOMContentLoaded', silentVisitorLog);
 // project modals — open/close with GSAP animations
 const modalBtns = document.querySelectorAll('.open-modal-btn');
 const closeBtns = document.querySelectorAll('.close-modal-btn');
