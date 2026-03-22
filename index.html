@@ -152,6 +152,9 @@
         color: rgb(147 197 253);
     }
 
+    @keyframes gear-cw  { to { transform: rotate( 360deg); } }
+    @keyframes gear-ccw { to { transform: rotate(-360deg); } }
+
     .text-liquid-blue {
         /* The Palette: Ice Blue -> Engineer Blue -> Deep Sea Blue */
         background-image: radial-gradient(
@@ -226,7 +229,24 @@
     
     <!-- Hero Section -->
     <header class="relative bg-eng-900 text-white pt-32 pb-24 lg:pt-48 lg:pb-32 overflow-hidden">
-        <div class="absolute inset-0 grid-pattern opacity-20"></div>
+        <!-- Blueprint Grid + Gear Background -->
+        <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
+            <svg id="gear-svg" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="bp-minor" width="24" height="24" patternUnits="userSpaceOnUse">
+                        <path d="M 24 0 L 0 0 0 24" fill="none" stroke="rgba(14,165,233,0.12)" stroke-width="0.5"/>
+                    </pattern>
+                    <pattern id="bp-major" width="120" height="120" patternUnits="userSpaceOnUse">
+                        <rect width="120" height="120" fill="url(#bp-minor)"/>
+                        <path d="M 120 0 L 0 0 0 120" fill="none" stroke="rgba(14,165,233,0.28)" stroke-width="1"/>
+                    </pattern>
+                </defs>
+                <!-- Blueprint grid -->
+                <rect width="100%" height="100%" fill="url(#bp-major)"/>
+                <!-- Gears injected by JS -->
+                <g id="gears-layer" fill="none" stroke="rgba(14,165,233,1)" stroke-width="0.8" opacity="0.16"></g>
+            </svg>
+        </div>
         <!-- Interactive Warp Grid -->
         <canvas id="warp-grid" class="absolute inset-0 w-full h-full z-0 opacity-20 pointer-events-none"></canvas>
         <div class="absolute top-0 right-0 -mt-20 -mr-20 w-96 h-96 bg-eng-500 rounded-full blur-3xl opacity-20 animate-pulse"></div>
@@ -1452,6 +1472,99 @@ closeBtns.forEach(btn => {
         });
     });
 });
+
+// ── SVG Gear Background ───────────────────────────────────────
+(function initGears() {
+    const svg   = document.getElementById('gear-svg');
+    const layer = document.getElementById('gears-layer');
+    if (!svg || !layer) return;
+
+    const W = svg.getBoundingClientRect().width  || svg.clientWidth;
+    const H = svg.getBoundingClientRect().height || svg.clientHeight;
+    if (!W || !H) return;
+
+    const M = 5; // module (controls tooth size and pitch radius = teeth*M/2)
+
+    // Generate a gear outline path centred at (0,0)
+    function gearPath(teeth) {
+        const r  = teeth * M / 2;
+        const ro = r + M;
+        const ri = r - 1.25 * M;
+        const da = Math.PI / teeth; // half pitch angle
+        const tw = da * 0.42;      // half tooth width (outer)
+        const dw = da * 0.68;      // half gap width   (root)
+        let d = '';
+        for (let i = 0; i < teeth; i++) {
+            const a   = (i / teeth) * Math.PI * 2;
+            const pt  = (rr, aa) => `${(rr * Math.cos(aa)).toFixed(2)},${(rr * Math.sin(aa)).toFixed(2)}`;
+            d += (i === 0 ? 'M' : 'L') + pt(ri, a - dw)
+               + ' L' + pt(ro, a - tw)
+               + ' L' + pt(ro, a + tw)
+               + ' L' + pt(ri, a + dw) + ' ';
+        }
+        return d + 'Z';
+    }
+
+    // module=5 → pitch radius = teeth*2.5
+    // Gear A (36T, r=90) – bottom-right, drives B & C chain
+    // Gear B (24T, r=60) – A→B centre dist = 150 ✓, ratio 36/24=1.5×
+    // Gear C (12T, r=30) – B→C centre dist = 90  ✓, ratio 36/12=3×
+    // Gear D (48T, r=120)– left edge,  standalone slow
+    // Gear E (20T, r=50) – D→E centre dist = 170 ✓, ratio 48/20=2.4×
+    // Gear F (16T, r=40) – top-right accent, standalone
+    const configs = [
+        { teeth: 36, cx: W - 85,  cy: H - 95,   period: 28,          cw: true  }, // A
+        { teeth: 24, cx: W - 235, cy: H - 95,   period: 28*(24/36),  cw: false }, // B
+        { teeth: 12, cx: W - 235, cy: H - 185,  period: 28*(12/36),  cw: true  }, // C
+        { teeth: 48, cx: -35,     cy: H * 0.55, period: 44,          cw: false }, // D
+        { teeth: 20, cx: 135,     cy: H * 0.55, period: 44*(20/48),  cw: true  }, // E
+        { teeth: 16, cx: W - 55,  cy: 65,       period: 14,          cw: false }, // F
+    ];
+
+    const ns = 'http://www.w3.org/2000/svg';
+    configs.forEach(cfg => {
+        const r  = cfg.teeth * M / 2;
+        const ri = r - 1.25 * M;
+        const rh = M * 1.8;
+        const anim = `${cfg.cw ? 'gear-cw' : 'gear-ccw'} ${cfg.period.toFixed(2)}s linear infinite`;
+
+        // Outer <g> positions the gear; inner <g> rotates it
+        const outer = document.createElementNS(ns, 'g');
+        outer.setAttribute('transform', `translate(${cfg.cx.toFixed(1)},${cfg.cy.toFixed(1)})`);
+
+        const inner = document.createElementNS(ns, 'g');
+        inner.style.cssText = `transform-origin:0 0;animation:${anim}`;
+
+        // Gear teeth outline
+        const body = document.createElementNS(ns, 'path');
+        body.setAttribute('d', gearPath(cfg.teeth));
+
+        // Root (dedendum) circle
+        const root = document.createElementNS(ns, 'circle');
+        root.setAttribute('r', ri.toFixed(1));
+
+        // Hub circle
+        const hub = document.createElementNS(ns, 'circle');
+        hub.setAttribute('r', rh.toFixed(1));
+
+        // 4 spokes
+        for (let s = 0; s < 4; s++) {
+            const a = s * Math.PI / 2;
+            const spoke = document.createElementNS(ns, 'line');
+            spoke.setAttribute('x1', (rh * Math.cos(a)).toFixed(2));
+            spoke.setAttribute('y1', (rh * Math.sin(a)).toFixed(2));
+            spoke.setAttribute('x2', (ri * 0.82 * Math.cos(a)).toFixed(2));
+            spoke.setAttribute('y2', (ri * 0.82 * Math.sin(a)).toFixed(2));
+            inner.appendChild(spoke);
+        }
+
+        inner.appendChild(body);
+        inner.appendChild(root);
+        inner.appendChild(hub);
+        outer.appendChild(inner);
+        layer.appendChild(outer);
+    });
+})();
 </script>
 
 </body>
