@@ -488,8 +488,8 @@ saxophone, having volunteered in a local community orchestra and band.
                                 <span class="px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded text-sm font-bold">Arduino</span>
                                 <span class="px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded text-sm font-bold">Data Analytics</span>
                             </div>
-                            <a href="#" class="magnetic-btn w-12 h-12 rounded-full border border-slate-300 flex items-center justify-center hover:bg-eng-500 hover:text-white hover:border-eng-500 transition-all">
-                                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                            <a href="#" data-target="modal-proj-1" class="open-modal-btn magnetic-btn w-12 h-12 rounded-full border border-slate-300 flex items-center justify-center hover:bg-eng-500 hover:text-white hover:border-eng-500 transition-all">
+                                <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
                             </a>
                         </div>
                     </div>
@@ -543,8 +543,8 @@ saxophone, having volunteered in a local community orchestra and band.
                                 <span class="px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded text-sm font-bold">Electromechanical</span>
                                 <span class="px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded text-sm font-bold">Arduino</span>
                             </div>
-                            <a href="#" class="magnetic-btn w-12 h-12 rounded-full border border-slate-300 flex items-center justify-center hover:bg-eng-500 hover:text-white hover:border-eng-500 transition-all">
-                                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                            <a href="#" data-target="modal-proj-3" class="open-modal-btn magnetic-btn w-12 h-12 rounded-full border border-slate-300 flex items-center justify-center hover:bg-eng-500 hover:text-white hover:border-eng-500 transition-all">
+                                <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
                             </a>
                         </div>
                     </div>
@@ -845,6 +845,150 @@ saxophone, having volunteered in a local community orchestra and band.
             </div>
         </div>
     </div>
+
+<!-- Modal: Self-Balancing Robot -->
+<div id="modal-proj-1" class="project-modal fixed inset-0 z-[100] hidden flex items-center justify-center p-4 sm:p-6">
+    <div class="modal-backdrop absolute inset-0 bg-slate-900/60 backdrop-blur-md"></div>
+    <div class="modal-content-box relative w-full max-w-5xl max-h-[90vh] bg-white dark:bg-slate-800 rounded-3xl shadow-2xl overflow-y-auto border border-slate-200 dark:border-slate-700 flex flex-col">
+        <div class="sticky top-0 z-10 flex justify-between items-center p-6 bg-white/90 dark:bg-slate-800/90 backdrop-blur border-b border-slate-100 dark:border-slate-700">
+            <div>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Self-Balancing Robot</h2>
+                <span class="text-eng-500 font-bold uppercase tracking-wider text-xs">PID Control & Embedded Systems</span>
+            </div>
+            <button class="close-modal-btn p-2 bg-slate-100 dark:bg-slate-700 rounded-full hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+                <i data-lucide="x" class="w-6 h-6 text-slate-600 dark:text-slate-300"></i>
+            </button>
+        </div>
+        <div class="p-6 sm:p-10 space-y-10">
+            <video autoplay loop muted playsinline class="w-full h-[40vh] sm:h-[50vh] object-cover rounded-2xl border border-slate-200 dark:border-slate-700">
+                <source src="https://cdn.jsdelivr.net/gh/Nealbatchelor/portfolioassets/SBR12.mp4" type="video/mp4">
+            </video>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="md:col-span-2 space-y-8">
+                    <div>
+                        <h3 class="flex items-center gap-2 text-xl font-bold text-slate-900 dark:text-white mb-3">
+                            <i data-lucide="target" class="w-5 h-5 text-eng-500"></i> The Challenge
+                        </h3>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Balancing an inverted pendulum system is a classic control engineering problem. The goal was to design and build a two-wheeled robot capable of autonomous balancing on varying surfaces, demonstrating real-world application of control theory without the use of any pre-built balancing libraries.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="flex items-center gap-2 text-xl font-bold text-slate-900 dark:text-white mb-3">
+                            <i data-lucide="settings" class="w-5 h-5 text-eng-500"></i> Control System Design
+                        </h3>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                            A PID (Proportional–Integral–Derivative) controller was implemented on an Arduino microcontroller. An MPU-6050 IMU provides real-time tilt angle data via I²C, which the controller uses to drive two DC motors through an L298N motor driver.
+                        </p>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Gains were initially estimated using the <strong>Ziegler–Nichols tuning method</strong> and then refined through iterative testing on different surface types including carpet, tile, and wood. MATLAB and Simulink were used to model the system and simulate gain responses before flashing firmware to the hardware.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="flex items-center gap-2 text-xl font-bold text-slate-900 dark:text-white mb-3">
+                            <i data-lucide="bar-chart-2" class="w-5 h-5 text-eng-500"></i> Testing & Results
+                        </h3>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Data from each test run was logged and analysed in MATLAB. The final tuned PID gains produced stable balancing with a steady-state error of under 1.5° and a settling time of under 400ms after a disturbance impulse. The robot successfully balanced on all tested surfaces with no parameter changes between runs.
+                        </p>
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <div class="bg-slate-50 dark:bg-slate-700 p-6 rounded-2xl border border-slate-100 dark:border-slate-600">
+                        <h4 class="font-bold text-slate-900 dark:text-white mb-4">Technical Specifications</h4>
+                        <ul class="space-y-3 text-sm text-slate-600 dark:text-slate-300">
+                            <li class="flex justify-between border-b border-slate-200 dark:border-slate-600 pb-2"><span>Controller</span> <strong class="text-right">PID</strong></li>
+                            <li class="flex justify-between border-b border-slate-200 dark:border-slate-600 pb-2"><span>Tuning Method</span> <strong class="text-right">Ziegler–Nichols</strong></li>
+                            <li class="flex justify-between border-b border-slate-200 dark:border-slate-600 pb-2"><span>Microcontroller</span> <strong class="text-right">Arduino</strong></li>
+                            <li class="flex justify-between border-b border-slate-200 dark:border-slate-600 pb-2"><span>IMU</span> <strong class="text-right">MPU-6050</strong></li>
+                            <li class="flex justify-between border-b border-slate-200 dark:border-slate-600 pb-2"><span>Simulation</span> <strong class="text-right">MATLAB / Simulink</strong></li>
+                            <li class="flex justify-between"><span>Analysis</span> <strong class="text-right">Data Analytics</strong></li>
+                        </ul>
+                    </div>
+                    <div class="bg-eng-50 dark:bg-eng-900/30 p-6 rounded-2xl border border-eng-100 dark:border-eng-800">
+                        <h4 class="font-bold text-eng-900 dark:text-eng-300 mb-2 flex items-center gap-2">
+                            <i data-lucide="zap" class="w-4 h-4"></i> Key Outcome
+                        </h4>
+                        <p class="text-sm text-eng-800 dark:text-eng-200 leading-relaxed">
+                            Successfully demonstrated autonomous balancing across multiple surface types using a hand-tuned PID controller, with all performance data validated through MATLAB analysis.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Dual-axis Solar Tracker -->
+<div id="modal-proj-3" class="project-modal fixed inset-0 z-[100] hidden flex items-center justify-center p-4 sm:p-6">
+    <div class="modal-backdrop absolute inset-0 bg-slate-900/60 backdrop-blur-md"></div>
+    <div class="modal-content-box relative w-full max-w-5xl max-h-[90vh] bg-white dark:bg-slate-800 rounded-3xl shadow-2xl overflow-y-auto border border-slate-200 dark:border-slate-700 flex flex-col">
+        <div class="sticky top-0 z-10 flex justify-between items-center p-6 bg-white/90 dark:bg-slate-800/90 backdrop-blur border-b border-slate-100 dark:border-slate-700">
+            <div>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Dual-axis Solar Tracker</h2>
+                <span class="text-eng-500 font-bold uppercase tracking-wider text-xs">Electromechanical Control Systems</span>
+            </div>
+            <button class="close-modal-btn p-2 bg-slate-100 dark:bg-slate-700 rounded-full hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+                <i data-lucide="x" class="w-6 h-6 text-slate-600 dark:text-slate-300"></i>
+            </button>
+        </div>
+        <div class="p-6 sm:p-10 space-y-10">
+            <img src="https://cdn.jsdelivr.net/gh/Nealbatchelor/portfolioassets/image.jpeg" class="w-full h-[40vh] sm:h-[50vh] object-cover rounded-2xl border border-slate-200 dark:border-slate-700" alt="Solar Tracker">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="md:col-span-2 space-y-8">
+                    <div>
+                        <h3 class="flex items-center gap-2 text-xl font-bold text-slate-900 dark:text-white mb-3">
+                            <i data-lucide="target" class="w-5 h-5 text-eng-500"></i> The Problem
+                        </h3>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Static photovoltaic panels lose significant energy yield because they cannot follow the sun's path across the sky. The aim was to design, build, and test a 2-degree-of-freedom solar tracking system capable of maximising incident solar energy throughout a simulated day cycle.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="flex items-center gap-2 text-xl font-bold text-slate-900 dark:text-white mb-3">
+                            <i data-lucide="settings" class="w-5 h-5 text-eng-500"></i> Electromechanical Design
+                        </h3>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                            The tracker uses two servo motors — one for azimuth (horizontal) and one for elevation (vertical) — driven by an Arduino. Four LDR (light-dependent resistor) sensors arranged in a quadrant configuration provide differential light readings. The control algorithm continuously compares opposing pairs of LDRs and drives the servos to equalise the readings, orienting the panel toward peak light intensity.
+                        </p>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            The mechanical structure was fully designed in CAD and manufactured using a combination of 3D-printed components and aluminium extrusion, keeping weight low to reduce servo load and improve response speed.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="flex items-center gap-2 text-xl font-bold text-slate-900 dark:text-white mb-3">
+                            <i data-lucide="bar-chart-2" class="w-5 h-5 text-eng-500"></i> Results
+                        </h3>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            During controlled testing across a simulated day cycle, the dual-axis tracker achieved a <strong>23% increase in incident energy</strong> compared to a fixed-angle static PV cell positioned at the same mean angle. All results were logged and analysed to validate tracker performance across different simulated sky conditions.
+                        </p>
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <div class="bg-slate-50 dark:bg-slate-700 p-6 rounded-2xl border border-slate-100 dark:border-slate-600">
+                        <h4 class="font-bold text-slate-900 dark:text-white mb-4">Technical Specifications</h4>
+                        <ul class="space-y-3 text-sm text-slate-600 dark:text-slate-300">
+                            <li class="flex justify-between border-b border-slate-200 dark:border-slate-600 pb-2"><span>Degrees of Freedom</span> <strong class="text-right">2 (Az + El)</strong></li>
+                            <li class="flex justify-between border-b border-slate-200 dark:border-slate-600 pb-2"><span>Sensing</span> <strong class="text-right">4× LDR Quadrant</strong></li>
+                            <li class="flex justify-between border-b border-slate-200 dark:border-slate-600 pb-2"><span>Actuation</span> <strong class="text-right">Servo Motors</strong></li>
+                            <li class="flex justify-between border-b border-slate-200 dark:border-slate-600 pb-2"><span>Microcontroller</span> <strong class="text-right">Arduino</strong></li>
+                            <li class="flex justify-between border-b border-slate-200 dark:border-slate-600 pb-2"><span>Structure</span> <strong class="text-right">CAD + 3D Print</strong></li>
+                            <li class="flex justify-between"><span>Energy Gain</span> <strong class="text-right">+23%</strong></li>
+                        </ul>
+                    </div>
+                    <div class="bg-eng-50 dark:bg-eng-900/30 p-6 rounded-2xl border border-eng-100 dark:border-eng-800">
+                        <h4 class="font-bold text-eng-900 dark:text-eng-300 mb-2 flex items-center gap-2">
+                            <i data-lucide="sun" class="w-4 h-4"></i> Key Outcome
+                        </h4>
+                        <p class="text-sm text-eng-800 dark:text-eng-200 leading-relaxed">
+                            A 23% improvement in energy yield over a static panel, validated through a full simulated day-cycle test — demonstrating the practical value of active solar tracking in renewable energy applications.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script>
