@@ -44,6 +44,19 @@
         overflow-x: hidden;
         touch-action: pan-y;
     }
+    body::after {
+        content: '';
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: env(safe-area-inset-bottom);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        background: transparent;
+        pointer-events: none;
+        z-index: 9999;
+    }
     #card-icon i {
     transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -911,27 +924,6 @@ saxophone, having volunteered in a local community orchestra and band.
         once: true,    // Animation happens only once (doesn't repeat on scroll up)
         offset: 100,   // Triggers 100px before the element is visible
     });
-    // ── Dynamic body background to match safe-area to current section ──
-    const bgSections = [
-        { el: document.querySelector('header'),          light: '#0c4a6e', dark: '#0c4a6e' },
-        { el: document.getElementById('about'),          light: '#ffffff', dark: '#0f172a' },
-        { el: document.getElementById('model-showcase'), light: '#0f172a', dark: '#0f172a' },
-        { el: document.getElementById('projects'),       light: '#f8fafc', dark: '#020617' },
-        { el: document.getElementById('experience'),     light: '#ffffff', dark: '#0f172a' },
-        { el: document.getElementById('contact'),        light: '#ffffff', dark: '#0f172a' },
-    ].filter(s => s.el);
-
-    function updateBodyBg() {
-        const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        let active = bgSections[0];
-        for (const s of bgSections) {
-            if (s.el.getBoundingClientRect().top <= window.innerHeight * 0.5) active = s;
-        }
-        const color = isDark ? active.dark : active.light;
-        document.body.style.backgroundColor = color;
-        document.documentElement.style.backgroundColor = color;
-    }
-
     // ── Scroll element refs (cached once) ────────────────────────
     const scrollProgress  = document.getElementById("scroll-progress");
     const stickySection   = document.querySelector('#projects');
@@ -964,9 +956,6 @@ saxophone, having volunteered in a local community orchestra and band.
         // 1. Scroll progress bar
         scrollProgress.style.width = (scrollY / docH * 100) + "%";
 
-        // 1b. Body background (keeps safe-area colour in sync with visible section)
-        updateBodyBg();
-
         // 2. Gallery horizontal scroll
         if (stickySection) {
             let pct = (scrollY - galleryOffsetTop) / (stickySection.offsetHeight - window.innerHeight);
@@ -991,7 +980,6 @@ saxophone, having volunteered in a local community orchestra and band.
     }
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    updateBodyBg();
     // Fade out the mobile scroll hint once the user scrolls into the gallery
     const scrollHint = document.getElementById('scroll-hint');
     if (scrollHint) {
