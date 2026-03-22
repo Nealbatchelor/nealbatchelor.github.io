@@ -8,7 +8,7 @@
         }
     </script>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Neal Batchelor | Mechanical Engineer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -43,6 +43,7 @@
         max-width: 100%;
         overflow-x: hidden;
         touch-action: pan-y;
+        padding-bottom: env(safe-area-inset-bottom);
     }
     #card-icon i {
     transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -161,7 +162,7 @@
     </style>
 </head>
 
-<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 antialiased selection:bg-eng-500 selection:text-white overflow-x-hidden">
+<body class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 antialiased selection:bg-eng-500 selection:text-white overflow-x-hidden">
     <!-- Scroll Progress Bar -->
     <div id="scroll-progress" class="fixed top-0 left-0 h-1.5 bg-eng-500 z-[100] transition-all duration-75 ease-out shadow-[0_0_10px_rgba(14,165,233,0.5)]" style="width: 0%"></div>
     <!-- Navigation -->
