@@ -41,12 +41,6 @@
         }
     </script>
     <style>
-    html {
-        background-color: #ffffff;
-    }
-    @media (prefers-color-scheme: dark) {
-        html { background-color: #0f172a; }
-    }
     body {
         max-width: 100%;
         overflow-x: hidden;
@@ -230,7 +224,7 @@
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
             <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6">
                 Neal Batchelor's <br class="hidden md:block" />
-                <span class="text-liquid-blue">Portfolio2</span>
+                <span class="text-liquid-blue">Portfolio</span>
             </h1>
             <p class="text-xl text-slate-300 max-w-2xl mb-10 leading-relaxed">
                 Specialising in Quality Engineering, CAD design, finite element analysis (FEA), and rapid prototyping. Well experienced with continuous improvement cycles and root cause analysis.
@@ -943,6 +937,26 @@ saxophone, having volunteered in a local community orchestra and band.
         requestAnimationFrame(handleScrollFrame);
     }
 
+    // ── Dynamic theme-color based on visible section ──────────────
+    const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+    const themeSections = [
+        { el: document.querySelector('header'),           color: '#0c4a6e' },
+        { el: document.getElementById('about'),           color: '#0f172a' },
+        { el: document.getElementById('model-showcase'),  color: '#0f172a' },
+        { el: document.getElementById('projects'),        color: '#020617' },
+        { el: document.getElementById('experience'),      color: '#0f172a' },
+        { el: document.getElementById('contact'),         color: '#0f172a' },
+    ].filter(s => s.el);
+
+    function updateThemeColor() {
+        if (!themeColorMeta) return;
+        let active = themeSections[0];
+        for (const s of themeSections) {
+            if (s.el.getBoundingClientRect().top <= 80) active = s;
+        }
+        themeColorMeta.setAttribute('content', active.color);
+    }
+
     function handleScrollFrame() {
         rafPending = false;
         const scrollY = window.scrollY;
@@ -950,6 +964,9 @@ saxophone, having volunteered in a local community orchestra and band.
 
         // 1. Scroll progress bar
         scrollProgress.style.width = (scrollY / docH * 100) + "%";
+
+        // 1b. Theme color
+        updateThemeColor();
 
         // 2. Gallery horizontal scroll
         if (stickySection) {
@@ -975,6 +992,7 @@ saxophone, having volunteered in a local community orchestra and band.
     }
 
     window.addEventListener('scroll', onScroll, { passive: true });
+    updateThemeColor();
 
     // Fade out the mobile scroll hint once the user scrolls into the gallery
     const scrollHint = document.getElementById('scroll-hint');
