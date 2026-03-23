@@ -122,9 +122,56 @@
     }
     
     /* dark mode overrides */
-    .dark #main-nav {
-        background-color: rgba(15, 23, 42, 0.9);
-        border-color: rgb(51 65 85);
+    #main-nav {
+        transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+        background-color: rgba(255, 255, 255, 0.45);
+        backdrop-filter: blur(20px) saturate(180%) brightness(1.05);
+        -webkit-backdrop-filter: blur(20px) saturate(180%) brightness(1.05);
+        border-bottom: none;
+        box-shadow: 0 1px 24px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255,255,255,0.5);
+    }
+    .dark #main-nav:not(.nav-top) {
+        background-color: rgba(15, 23, 42, 0.55) !important;
+        backdrop-filter: blur(20px) saturate(180%) brightness(0.95) !important;
+        -webkit-backdrop-filter: blur(20px) saturate(180%) brightness(0.95) !important;
+        border-bottom: none !important;
+        box-shadow: 0 1px 24px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.05) !important;
+    }
+    #main-nav.nav-top {
+        background-color: transparent !important;
+        border-color: transparent !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+    #main-nav.nav-top a,
+    #main-nav.nav-top button,
+    #main-nav.nav-top span,
+    #main-nav.nav-on-dark a,
+    #main-nav.nav-on-dark button,
+    #main-nav.nav-on-dark span {
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+    #main-nav.nav-top a:hover,
+    #main-nav.nav-top button:hover,
+    #main-nav.nav-on-dark a:hover,
+    #main-nav.nav-on-dark button:hover {
+        color: #ffffff !important;
+    }
+    #main-nav.nav-top .nav-contact-btn,
+    #main-nav.nav-on-dark .nav-contact-btn {
+        background-color: rgba(255,255,255,0.15) !important;
+        color: #ffffff !important;
+    }
+    /* light mode only — match hero nav to stats bar shade */
+    html:not(.dark) #main-nav.nav-on-hero {
+        background-color: transparent !important;
+        background-image: linear-gradient(to bottom, rgba(7,89,133,0.85) 0%, rgba(7,89,133,0) 100%) !important;
+    }
+    /* light mode only — darker overlay over solar tracker */
+    html:not(.dark) #main-nav.nav-on-dark:not(.nav-on-hero) {
+        background-color: transparent !important;
+        background-image: linear-gradient(to bottom, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.15) 100%) !important;
     }
     .dark #mobile-menu {
         background-color: rgb(15 23 42);
@@ -164,6 +211,339 @@
         background-clip: text;
         -webkit-background-clip: text;
     }
+    .nb-monogram {
+        position: relative;
+        padding: 5px 8px;
+        background-image:
+            linear-gradient(#0ea5e9, #0ea5e9),
+            linear-gradient(#0ea5e9, #0ea5e9),
+            linear-gradient(#0ea5e9, #0ea5e9),
+            linear-gradient(#0ea5e9, #0ea5e9),
+            linear-gradient(#0ea5e9, #0ea5e9),
+            linear-gradient(#0ea5e9, #0ea5e9),
+            linear-gradient(#0ea5e9, #0ea5e9),
+            linear-gradient(#0ea5e9, #0ea5e9);
+        background-size:
+            2px 8px, 8px 2px,
+            2px 8px, 8px 2px,
+            2px 8px, 8px 2px,
+            2px 8px, 8px 2px;
+        background-position:
+            top left,    top left,
+            top right,   top right,
+            bottom left, bottom left,
+            bottom right,bottom right;
+        background-repeat: no-repeat;
+    }
+
+    .flip-char {
+        display: inline-block;
+        vertical-align: middle;
+        height: 2em;
+        line-height: 2em;
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%);
+        mask-image: linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%);
+    }
+    .flip-char-inner {
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+    }
+    .flip-char-inner span {
+        display: block;
+        height: 2em;
+        line-height: 2em;
+    }
+    .flip-char-inner .flip-alt {
+        color: #0ea5e9;
+    }
+
+    /* ---- TIMELINE / EXPERIENCE CSS VARIABLES ------------------- */
+    :root {
+      --tl-accent:    #0ea5e9;
+      --tl-surface:   #ffffff;
+      --tl-surface-b: #f8fafc;
+      --tl-divider:   #e2e8f0;
+      --tl-text-sec:  #64748b;
+      --tl-bg:        #f8fafc;
+    }
+    html.dark {
+      --tl-accent:    #0ea5e9;
+      --tl-surface:   #1e293b;
+      --tl-surface-b: #0f172a;
+      --tl-divider:   #334155;
+      --tl-text-sec:  #94a3b8;
+      --tl-bg:        #0f172a;
+    }
+
+    /* ---- EXPERIENCE SECTION ------------------------------------ */
+    #experience { background: var(--tl-surface); }
+    html.dark #experience { background: var(--tl-bg); }
+
+    .timeline {
+      position: relative;
+      max-width: 860px;
+      margin: 0 auto;
+      padding-top: 16px;
+    }
+    /* Center vertical line */
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      height: var(--tl-line-height, 100%);
+      width: 1px;
+      background: var(--tl-divider);
+      transform: translateX(-50%);
+    }
+    @media (max-width: 768px) {
+      .timeline::before { left: 20px; }
+    }
+
+    .timeline-entry {
+      display: grid;
+      grid-template-columns: 1fr 40px 1fr;
+      gap: 0;
+      align-items: start;
+      margin-bottom: 48px;
+      position: relative;
+    }
+    @media (max-width: 768px) {
+      .timeline-entry {
+        grid-template-columns: 40px 1fr;
+        gap: 0;
+      }
+      .timeline-entry .tl-date { display: none; }
+    }
+
+    .tl-date {
+      display: flex;
+      justify-content: flex-end;
+      padding-right: 32px;
+      padding-top: 4px;
+    }
+    .tl-date-badge {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: var(--tl-text-sec);
+      background: var(--tl-bg);
+      border: 1px solid var(--tl-divider);
+      border-radius: 100px;
+      padding: 4px 12px;
+      white-space: nowrap;
+    }
+    html.dark .tl-date-badge { background: var(--tl-surface); }
+
+    .tl-dot-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .tl-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--tl-accent);
+      flex-shrink: 0;
+      position: relative;
+      margin-top: 6px;
+    }
+    .tl-dot::before {
+      content: '';
+      position: absolute;
+      inset: -5px;
+      border-radius: 50%;
+      background: var(--tl-accent);
+      opacity: 0.15;
+    }
+
+    .tl-card {
+      padding-left: 32px;
+    }
+    @media (max-width: 768px) {
+      .tl-card { padding-left: 20px; }
+    }
+    .tl-card-inner {
+      background: var(--tl-surface);
+      border: 1px solid var(--tl-surface-b);
+      border-radius: 12px;
+      padding: 24px;
+    }
+    html.dark .tl-card-inner {
+      background: #1e293b;
+      border-color: #334155;
+    }
+
+    /* Alternate: even entries flip to right side */
+    .timeline-entry.flip .tl-date { order: 3; justify-content: flex-start; padding-right: 0; padding-left: 32px; }
+    .timeline-entry.flip .tl-dot-col { order: 2; }
+    .timeline-entry.flip .tl-card { order: 1; padding-left: 0; padding-right: 32px; text-align: right; }
+    @media (max-width: 768px) {
+      .timeline-entry.flip .tl-card { order: 2; text-align: left; padding-left: 20px; padding-right: 0; }
+      .timeline-entry.flip .tl-dot-col { order: 1; }
+    }
+
+    .tl-role {
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 2px;
+    }
+    html.dark .tl-role { color: #f1f5f9; }
+
+    .tl-company {
+      font-size: 13px;
+      color: var(--tl-text-sec);
+      margin-bottom: 8px;
+    }
+    .tl-desc {
+      font-size: 14px;
+      color: var(--tl-text-sec);
+      line-height: 1.65;
+    }
+    .tl-confirmed {
+      display: inline-block;
+      background: var(--tl-accent);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 100px;
+      margin-bottom: 8px;
+    }
+    .tl-grade {
+      display: inline-block;
+      background: #f1f5f9;
+      color: #475569;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 100px;
+      margin-bottom: 8px;
+    }
+    html.dark .tl-grade {
+      background: #334155;
+      color: #94a3b8;
+    }
+    .tl-mobile-date {
+      display: none;
+      font-size: 12px;
+      color: var(--tl-text-sec);
+      margin-bottom: 6px;
+    }
+    @media (max-width: 768px) { .tl-mobile-date { display: block; } }
+
+    .fade-in {
+        opacity: 0;
+        transform: translateY(32px);
+        transition: opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1);
+    }
+    .fade-in.visible { opacity: 1; transform: none; }
+
+    /* timeline entries slide in from their respective side */
+    .timeline-entry.fade-in {
+        transform: translateY(20px) translateX(32px);
+    }
+    .timeline-entry.flip.fade-in {
+        transform: translateY(20px) translateX(-32px);
+    }
+    .timeline-entry.fade-in.visible,
+    .timeline-entry.flip.fade-in.visible {
+        opacity: 1;
+        transform: none;
+    }
+
+    /* scroll-driven timeline goo trail */
+    #tl-trail {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        width: 4px;
+        height: 0;
+        transform: translateX(-50%);
+        background: linear-gradient(to bottom,
+            transparent 0%,
+            rgba(56,189,248,0.08) 20%,
+            rgba(56,189,248,0.35) 65%,
+            rgba(56,189,248,0.9) 100%);
+        border-radius: 0 0 4px 4px;
+        pointer-events: none;
+        z-index: 2;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        will-change: height;
+        filter: blur(1.5px);
+    }
+    #tl-trail::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        left: 50%;
+        width: 14px;
+        transform: translateX(-50%);
+        background: inherit;
+        filter: blur(5px);
+        opacity: 0.45;
+        border-radius: inherit;
+    }
+    @media (max-width: 768px) {
+        #tl-trail { left: 20px; }
+    }
+
+    /* scroll-driven timeline light orb */
+    #tl-light {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        width: 14px; height: 14px;
+        border-radius: 50%;
+        background: radial-gradient(circle, #fff 0%, #38bdf8 35%, rgba(56,189,248,0.2) 70%, transparent 100%);
+        box-shadow: 0 0 6px 4px rgba(56,189,248,0.75), 0 0 20px 8px rgba(56,189,248,0.3);
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 3;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        will-change: top, left;
+    }
+    @media (max-width: 768px) {
+        #tl-light { left: 20px; }
+    }
+    @keyframes tl-ping-anim {
+        0%   { transform: scale(0.3); opacity: 0.85; }
+        100% { transform: scale(1.8); opacity: 0; }
+    }
+    .tl-ping {
+        position: absolute;
+        width: 12px; height: 12px;
+        margin-left: -6px;
+        margin-top: -6px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(56, 189, 248, 0.85);
+        pointer-events: none;
+        z-index: 2;
+        animation: tl-ping-anim 0.6s ease-out forwards;
+    }
+
+    .tl-section-label {
+      color: #0ea5e9;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 13px;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .tl-section-heading {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 0;
+    }
+    html.dark .tl-section-heading { color: #f1f5f9; }
     </style>
 </head>
 
@@ -174,19 +554,19 @@
         class="fixed bottom-6 right-6 z-50 w-11 h-11 rounded-full bg-slate-900 border border-eng-500 text-eng-400 flex items-center justify-center shadow-lg opacity-0 pointer-events-none transition-opacity duration-300 hover:bg-eng-500 hover:text-white">
         <i data-lucide="arrow-up" class="w-5 h-5"></i>
     </button>
-    <nav id="main-nav" class="fixed w-full bg-white/90 backdrop-blur-md shadow-sm z-50 border-b border-slate-200">
+    <nav id="main-nav" class="fixed w-full bg-white/90 backdrop-blur-md z-50 nav-top">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
-                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
-                    <span class="font-extrabold text-xl tracking-tight text-slate-900 dark:text-white">NB</span>
+                <div id="nb-container" class="nb-monogram flex-shrink-0 inline-flex items-center cursor-pointer whitespace-nowrap font-extrabold text-xl tracking-tight text-slate-900 dark:text-white" onclick="window.scrollTo(0,0)">
+                    <span>N</span><span id="nb-eal"  class="overflow-hidden inline-block" style="width:0; transition: width 0.45s cubic-bezier(0.16,1,0.3,1);">eal&nbsp;</span><span>B</span><span id="nb-atch" class="overflow-hidden inline-block" style="width:0; transition: width 0.45s cubic-bezier(0.16,1,0.3,1) 0.08s;">atchelor</span>
                 </div>
                 
                 <!-- desktop nav links -->
                 <div class="hidden md:flex space-x-8 items-center">
-                    <a href="#about" class="text-slate-600 dark:text-slate-300 hover:text-eng-500 font-medium transition-colors">About</a>
-                    <a href="#projects" class="text-slate-600 dark:text-slate-300 hover:text-eng-500 font-medium transition-colors">Projects</a>
-                    <a href="#experience" class="text-slate-600 dark:text-slate-300 hover:text-eng-500 font-medium transition-colors">Experience</a>
-                    <a href="#contact" class="px-5 py-2.5 bg-eng-900 text-white rounded-lg hover:bg-eng-800 transition-colors shadow-lg shadow-eng-900/20 font-medium">Contact Me</a>
+                    <a href="#about" class="flip-text text-slate-600 dark:text-slate-300 font-medium" style="perspective:400px">About</a>
+                    <a href="#projects" class="flip-text text-slate-600 dark:text-slate-300 font-medium" style="perspective:400px">Projects</a>
+                    <a href="#experience" class="flip-text text-slate-600 dark:text-slate-300 font-medium" style="perspective:400px">Experience</a>
+                    <a href="#contact" class="nav-contact-btn px-5 py-2.5 bg-eng-900 text-white rounded-lg hover:bg-eng-800 transition-colors shadow-lg shadow-eng-900/20 font-medium">Contact Me</a>
                     <button id="dark-toggle" aria-label="Toggle dark mode" class="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                         <i id="theme-icon-moon" data-lucide="moon" class="w-5 h-5"></i>
                         <i id="theme-icon-sun" data-lucide="sun" class="w-5 h-5"></i>
@@ -550,77 +930,88 @@ saxophone, having volunteered in a local community orchestra and band.
     </section>
 
     <!-- experience timeline -->
-    <section id="experience" class="py-24 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-700">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="experience" class="py-24">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <span class="text-eng-500 font-bold uppercase tracking-wider text-sm">Career Path</span>
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mt-2">Professional Experience</h2>
+                <span class="tl-section-label">CAREER PATH</span>
+                <h2 class="tl-section-heading">Professional Experience</h2>
             </div>
 
-            <div class="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-300 dark:before:via-slate-600 before:to-transparent">
-                
-                <!-- Honeywell placement (upcoming) -->
-                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active" data-aos="fade-left">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-eng-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
-                        <i data-lucide="briefcase" class="w-5 h-5 text-white"></i>
+            <div class="timeline">
+                <div id="tl-trail"></div>
+                <div id="tl-light"></div>
+
+                <!-- Entry 1: Honeywell -->
+                <div class="timeline-entry fade-in">
+                    <div class="tl-date">
+                        <span class="tl-date-badge">Jul 2026 – Jul 2027</span>
                     </div>
-                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
-                        <div class="flex items-start justify-between gap-2 mb-2">
-                            <h3 class="font-bold text-slate-900 dark:text-white text-lg">Engineering Placement</h3>
-                            <div class="flex flex-col items-end gap-1 shrink-0">
-                                <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded">Jul 2026 - Jul 2027</span>
-                                <span class="bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 rounded-full px-2 py-0.5 text-xs font-semibold">Confirmed Placement</span>
-                            </div>
+                    <div class="tl-dot-col">
+                        <div class="tl-dot"></div>
+                    </div>
+                    <div class="tl-card">
+                        <div class="tl-card-inner">
+                            <span class="tl-confirmed">CONFIRMED PLACEMENT</span>
+                            <div class="tl-mobile-date">Jul 2026 – Jul 2027</div>
+                            <div class="tl-role">Engineering Placement</div>
+                            <div class="tl-company">Honeywell</div>
+                            <p class="tl-desc">Year-long industrial placement in mechanical engineering. (Details to be added upon commencement)</p>
                         </div>
-                        <div class="text-sm font-medium text-slate-500 dark:text-slate-400 mb-3">Honeywell</div>
-                        <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">-</p>
                     </div>
                 </div>
 
-                <!-- University of Warwick -->
-                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active" data-aos="fade-right">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-300 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
-                        <i data-lucide="graduation-cap" class="w-5 h-5 text-slate-600"></i>
+                <!-- Entry 2: Warwick (flip) -->
+                <div class="timeline-entry flip fade-in" style="transition-delay:0.15s">
+                    <div class="tl-date">
+                        <span class="tl-date-badge">Sep 2024 – Jul 2026</span>
                     </div>
-                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
-                        <div class="flex items-start justify-between gap-2 mb-2">
-                            <h3 class="font-bold text-slate-900 dark:text-white text-lg">Mechanical Engineering Student</h3>
-                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded shrink-0">Sep 2024 - Jul 2026</span>
+                    <div class="tl-dot-col">
+                        <div class="tl-dot"></div>
+                    </div>
+                    <div class="tl-card">
+                        <div class="tl-card-inner">
+                            <span class="tl-grade">Upper Second-Class Honours (69%)</span>
+                            <div class="tl-mobile-date">Sep 2024 – Jul 2026</div>
+                            <div class="tl-role">Mechanical Engineering Student</div>
+                            <div class="tl-company">University of Warwick</div>
+                            <p class="tl-desc">BEng Mechanical Engineering. Modules include dynamics, thermofluids, control systems, and engineering design.</p>
                         </div>
-                        <div class="text-sm font-medium text-slate-500 dark:text-slate-400 mb-3">University of Warwick</div>
-                        <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">Upper Second-Class Honours (69%)</p>
                     </div>
                 </div>
 
-                <!-- Mahle Powertrain internship -->
-                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active" data-aos="fade-left">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-300 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
-                        <i data-lucide="briefcase" class="w-5 h-5 text-slate-600"></i>
+                <!-- Entry 3: Mahle -->
+                <div class="timeline-entry fade-in" style="transition-delay:0.3s">
+                    <div class="tl-date">
+                        <span class="tl-date-badge">April 2023</span>
                     </div>
-                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
-                        <div class="flex items-start justify-between gap-2 mb-2">
-                            <h3 class="font-bold text-slate-900 dark:text-white text-lg">Engineer Intern</h3>
-                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded shrink-0">April 2023</span>
+                    <div class="tl-dot-col">
+                        <div class="tl-dot"></div>
+                    </div>
+                    <div class="tl-card">
+                        <div class="tl-card-inner">
+                            <div class="tl-mobile-date">April 2023</div>
+                            <div class="tl-role">Engineer Intern</div>
+                            <div class="tl-company">Mahle Powertrain</div>
+                            <p class="tl-desc">Led V12 engine failure analysis using Ansys FEA and non-destructive testing (FPI) to identify wear patterns, improve component reliability, and optimise QA protocols.</p>
                         </div>
-                        <div class="text-sm font-medium text-slate-500 dark:text-slate-400 mb-3">Mahle Powertrain</div>
-                        <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">Led V12 engine failure analysis using Ansys FEA and non-destructive testing (FPI) to identify wear patterns, improve component reliability, and optimise QA protocols.</p>
                     </div>
                 </div>
 
-                <!-- Northampton Academy -->
-                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active" data-aos="fade-right">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-300 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
-                        <i data-lucide="graduation-cap" class="w-5 h-5 text-slate-600"></i>
+                <!-- Entry 4: Northampton Academy (flip) -->
+                <div class="timeline-entry flip fade-in" style="transition-delay:0.45s">
+                    <div class="tl-date">
+                        <span class="tl-date-badge">2017 – 2024</span>
                     </div>
-                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
-                        <div class="flex items-start justify-between gap-2 mb-2">
-                            <h3 class="font-bold text-slate-900 dark:text-white text-lg">Student</h3>
-                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded shrink-0">2017-2024</span>
+                    <div class="tl-dot-col">
+                        <div class="tl-dot"></div>
+                    </div>
+                    <div class="tl-card">
+                        <div class="tl-card-inner">
+                            <div class="tl-mobile-date">2017 – 2024</div>
+                            <div class="tl-role">Student</div>
+                            <div class="tl-company">Northampton Academy</div>
+                            <p class="tl-desc">A-Levels in Maths, Further Maths &amp; Physics. EPQ in Motorsport Safety. Nine grade 9s at GCSE.</p>
                         </div>
-                        <div class="text-sm font-medium text-slate-500 dark:text-slate-400 mb-3">Northampton Academy</div>
-                        <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">A-Levels in Maths, Further Maths & Physics</p>
-                        <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">EPQ in Motorsport safety</p>
-                        <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">Achieved nine grade 9s at GCSE</p>
                     </div>
                 </div>
 
@@ -1134,7 +1525,35 @@ saxophone, having volunteered in a local community orchestra and band.
         once: true,
         offset: 100,
     });
+
+    // fade-in on scroll for timeline entries
+    const fadeObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                fadeObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.timeline-entry.fade-in').forEach(el => fadeObserver.observe(el));
+
+    // stop the grey centre line at the last dot
+    function updateTlLineHeight() {
+        const tl = document.querySelector('.timeline');
+        if (!tl) return;
+        const dots = tl.querySelectorAll('.tl-dot');
+        const last = dots[dots.length - 1];
+        if (!last) return;
+        let h = last.offsetHeight / 2;
+        let el = last;
+        while (el && el !== tl) { h += el.offsetTop; el = el.offsetParent; }
+        tl.style.setProperty('--tl-line-height', h + 'px');
+    }
+    window.addEventListener('load',   updateTlLineHeight, { once: true });
+    window.addEventListener('resize', updateTlLineHeight, { passive: true });
+
     // cache scroll-dependent element refs
+    const mainNav         = document.getElementById('main-nav');
     const scrollProgress  = document.getElementById("scroll-progress");
     const backToTop       = document.getElementById("back-to-top");
     const stickySection   = document.querySelector('#projects');
@@ -1143,8 +1562,13 @@ saxophone, having volunteered in a local community orchestra and band.
     const archiveBtn      = document.getElementById('archive-btn');
     const cardIcon        = document.getElementById('card-icon');
     const modelSection    = document.getElementById('model-showcase');
+    const heroSection     = document.querySelector('header');
+    const darkSections    = [heroSection, modelSection].filter(Boolean);
     const scrollModel     = document.getElementById('scroll-model');
     const rotProgress     = document.getElementById('rotation-progress');
+    const tlEl            = document.querySelector('.timeline');
+    const tlLight         = document.getElementById('tl-light');
+    const tlTrail         = document.getElementById('tl-trail');
     let galleryOffsetTop  = stickySection ? stickySection.offsetTop : 0;
     window.addEventListener('resize', () => {
         if (stickySection) galleryOffsetTop = stickySection.offsetTop;
@@ -1164,6 +1588,23 @@ saxophone, having volunteered in a local community orchestra and band.
         const scrollY = window.scrollY;
         const docH   = document.documentElement.scrollHeight - document.documentElement.clientHeight;
 
+        // nav transparency — transparent at top, frosted glass on scroll
+        mainNav.classList.toggle('nav-top', scrollY < 10);
+
+        // nav text colour — white when over dark sections
+        const navBottom = mainNav.getBoundingClientRect().bottom;
+        const isNavTop  = mainNav.classList.contains('nav-top');
+        const onDark = !isNavTop && darkSections.some(sec => {
+            const r = sec.getBoundingClientRect();
+            return r.top < navBottom && r.bottom > 0;
+        });
+        const onHero = !isNavTop && heroSection && (() => {
+            const r = heroSection.getBoundingClientRect();
+            return r.top < navBottom && r.bottom > 0;
+        })();
+        mainNav.classList.toggle('nav-on-dark', onDark);
+        mainNav.classList.toggle('nav-on-hero', onHero);
+
         // page progress bar
         scrollProgress.style.width = (scrollY / docH * 100) + "%";
 
@@ -1171,6 +1612,46 @@ saxophone, having volunteered in a local community orchestra and band.
         const show = scrollY > 400;
         backToTop.style.opacity        = show ? '1' : '0';
         backToTop.style.pointerEvents  = show ? 'auto' : 'none';
+
+        // scroll-driven timeline light
+        if (tlEl && tlLight) {
+            const tlRect = tlEl.getBoundingClientRect();
+            const inView = tlRect.bottom > 0 && tlRect.top < window.innerHeight;
+            tlLight.style.opacity = inView ? '1' : '0';
+            if (tlTrail) tlTrail.style.opacity = inView ? '1' : '0';
+            if (inView) {
+                let lightY = window.innerHeight * 0.5 - tlRect.top;
+                const allDots = tlEl.querySelectorAll('.tl-dot');
+                const lastDot = allDots[allDots.length - 1];
+                const maxY = lastDot
+                    ? lastDot.getBoundingClientRect().top - tlRect.top + lastDot.getBoundingClientRect().height / 2
+                    : tlRect.height;
+                lightY = Math.max(0, Math.min(maxY, lightY));
+                tlLight.style.top = lightY + 'px';
+                if (tlTrail) tlTrail.style.height = lightY + 'px';
+                // radial ping when light crosses each dot
+                const centreX = window.innerWidth <= 768 ? '20px' : '50%';
+
+                tlEl.querySelectorAll('.tl-dot').forEach(dot => {
+                    const dr   = dot.getBoundingClientRect();
+                    const dotY = dr.top - tlRect.top + dr.height / 2;
+                    if (lightY >= dotY - 2 && !dot._tlPinged) {
+                        dot._tlPinged = true;
+                        [0, 180].forEach(delay => {
+                            const p = document.createElement('span');
+                            p.className = 'tl-ping';
+                            p.style.left = centreX;
+                            p.style.top  = dotY + 'px';
+                            if (delay) p.style.animationDelay = delay + 'ms';
+                            tlEl.appendChild(p);
+                            p.addEventListener('animationend', () => p.remove(), { once: true });
+                        });
+                    } else if (lightY < dotY - 8) {
+                        dot._tlPinged = false;
+                    }
+                });
+            }
+        }
 
         // gallery horizontal scroll
         if (stickySection) {
@@ -1482,6 +1963,75 @@ document.getElementById('close-cv-modal').addEventListener('click', () => {
 cvBackdrop.addEventListener('click', () => {
     document.getElementById('close-cv-modal').click();
 });
+
+// NB monogram expand to Neal Batchelor on hover
+(function initNBExpand() {
+    const container = document.getElementById('nb-container');
+    const eal       = document.getElementById('nb-eal');
+    const atch      = document.getElementById('nb-atch');
+    if (!container || !eal || !atch) return;
+
+    // measure natural widths of the hidden text
+    eal.style.width  = 'max-content';
+    atch.style.width = 'max-content';
+    const ealW  = eal.scrollWidth  + 'px';
+    const atchW = atch.scrollWidth + 'px';
+    eal.style.width  = '0';
+    atch.style.width = '0';
+
+    container.addEventListener('mouseenter', () => {
+        eal.style.width  = ealW;
+        atch.style.width = atchW;
+    });
+
+    container.addEventListener('mouseleave', () => {
+        eal.style.width  = '0';
+        atch.style.width = '0';
+    });
+})();
+
+// slot-machine slide animation on nav links — propagates from cursor position
+(function initFlipText() {
+    const STAGGER = 40; // ms per character of distance from origin
+
+    document.querySelectorAll('.flip-text').forEach(el => {
+        el.innerHTML = [...el.textContent].map(ch =>
+            `<span class="flip-char"><span class="flip-char-inner">` +
+            `<span class="flip-orig">${ch}</span>` +
+            `<span class="flip-alt">${ch}</span>` +
+            `</span></span>`
+        ).join('');
+
+        let timers = [];
+
+        function slide(toFlipped, originIndex) {
+            timers.forEach(clearTimeout);
+            timers = [];
+            el.querySelectorAll('.flip-char-inner').forEach((inner, i) => {
+                const delay = Math.abs(i - originIndex) * STAGGER;
+                timers.push(setTimeout(() => {
+                    inner.style.transform = toFlipped ? 'translateY(-50%)' : 'translateY(0)';
+                }, delay));
+            });
+        }
+
+        function getCursorCharIndex(e) {
+            const chars = el.querySelectorAll('.flip-char');
+            let closest = 0;
+            let minDist = Infinity;
+            chars.forEach((char, i) => {
+                const rect = char.getBoundingClientRect();
+                const charCenter = rect.left + rect.width / 2;
+                const dist = Math.abs(e.clientX - charCenter);
+                if (dist < minDist) { minDist = dist; closest = i; }
+            });
+            return closest;
+        }
+
+        el.addEventListener('mouseenter', (e) => slide(true, getCursorCharIndex(e)));
+        el.addEventListener('mouseleave', (e) => slide(false, getCursorCharIndex(e)));
+    });
+})();
 
 // project modals — open/close with GSAP animations
 const modalBtns = document.querySelectorAll('.open-modal-btn');
