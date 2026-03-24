@@ -28,7 +28,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&family=Caveat:wght@700&family=Righteous&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -544,114 +544,6 @@
       margin-bottom: 0;
     }
     html.dark .tl-section-heading { color: #f1f5f9; }
-
-    /* ── Crayon annotation on "studying" ── */
-    .crayon-annotation {
-        position: relative;
-        display: inline-block;
-    }
-
-    /* The SVG floats above and to the right of the word */
-    .crayon-svg {
-        position: absolute;
-        left: 50%;
-        bottom: 100%;
-        width: 280px;
-        height: 65px;
-        pointer-events: none;
-        overflow: visible;
-    }
-
-    /* Draw the arrow path */
-    .crayon-arrow-path,
-    .crayon-arrowhead {
-        stroke-dasharray: 200;
-        stroke-dashoffset: 200;
-        animation: draw-path 1s ease-out 2.5s forwards;
-    }
-    .crayon-arrowhead {
-        stroke-dasharray: 60;
-        stroke-dashoffset: 60;
-        animation: draw-path 0.4s ease-out 3.3s forwards;
-    }
-
-    /* Fade in the "surviving" label after arrow is drawn */
-    .crayon-label {
-        opacity: 0;
-        animation: fade-in 0.3s ease-out 3.7s forwards;
-    }
-
-    /* Sticky note tab */
-    .sticky-tab {
-        position: relative;
-        display: inline-block;
-        cursor: pointer;
-        vertical-align: middle;
-        margin: 0 2px;
-    }
-    .sticky-tab-closed {
-        background: #fef08a;
-        color: #78716c;
-        font-family: 'Caveat', cursive;
-        font-size: 0.75rem;
-        font-weight: 700;
-        padding: 1px 7px 2px;
-        border-radius: 3px;
-        box-shadow: 1px 2px 5px rgba(0,0,0,0.18);
-        display: inline-block;
-        line-height: 1.6;
-        user-select: none;
-        transition: box-shadow 0.15s;
-    }
-    .sticky-tab:hover .sticky-tab-closed {
-        box-shadow: 2px 3px 8px rgba(0,0,0,0.22);
-    }
-    .sticky-tab-expanded {
-        display: none;
-        position: absolute;
-        left: 0;
-        top: 1.6em;
-        width: 170px;
-        background: #fef08a;
-        color: #44403c;
-        font-family: 'Caveat', cursive;
-        font-size: 0.95rem;
-        line-height: 1.45;
-        padding: 12px 13px 14px;
-        border-radius: 2px;
-        box-shadow: 3px 4px 12px rgba(0,0,0,0.2), 1px 1px 0 rgba(0,0,0,0.05);
-        transform: rotate(2deg);
-        z-index: 50;
-    }
-    .sticky-tab.is-open .sticky-tab-closed { display: none; }
-    .sticky-tab.is-open .sticky-tab-expanded { display: block; }
-
-    /* Crayon strikethrough SVG */
-    .crayon-strike-svg {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        overflow: visible;
-    }
-
-    .crayon-strike-line {
-        stroke-dasharray: 115;
-        stroke-dashoffset: 115;
-        animation: strike-draw 1.2s cubic-bezier(0.4, 0, 0.2, 1) 4.1s forwards;
-    }
-
-    @keyframes draw-path {
-        to { stroke-dashoffset: 0; }
-    }
-    @keyframes fade-in {
-        to { opacity: 1; }
-    }
-    @keyframes strike-draw {
-        to { stroke-dashoffset: 0; }
-    }
     </style>
 </head>
 
@@ -790,61 +682,51 @@
                          
                 </div>
                 <div>
-                    <h2 class="text-6xl md:text-8xl text-slate-900 dark:text-white mb-6" style="font-family: 'Righteous', cursive;">Hey!</h2>
-                    <p class="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
-                        My name is Neal and I am currently <span class="crayon-annotation">
-                            <span class="crayon-word">studying</span>
-                            <svg class="crayon-strike-svg" viewBox="0 0 100 20" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <defs>
-                                    <filter id="crayon-roughen" x="-5%" y="-80%" width="110%" height="260%">
-                                        <feTurbulence type="turbulence" baseFrequency="0.065" numOctaves="3" seed="7" result="noise"/>
-                                        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.8" xChannelSelector="R" yChannelSelector="G"/>
-                                    </filter>
-                                </defs>
-                                <!-- slightly diagonal wavy path: starts mid-left, ends slightly higher on the right -->
-                                <path class="crayon-strike-line"
-                                    d="M 1 13 C 18 15, 35 11, 52 13 C 68 15, 83 10, 99 9"
-                                    fill="none" stroke="#e03030" stroke-width="2.8" stroke-linecap="round"
-                                    filter="url(#crayon-roughen)"/>
-                                <!-- second pass for waxy layered texture -->
-                                <path class="crayon-strike-line"
-                                    d="M 1 13 C 18 15, 35 11, 52 13 C 68 15, 83 10, 99 9"
-                                    fill="none" stroke="#e03030" stroke-width="1.2" stroke-linecap="round" opacity="0.5"
-                                    filter="url(#crayon-roughen)"/>
-                            </svg>
-                            <svg class="crayon-svg" viewBox="0 0 280 65" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <!-- arrow path curving up and to the right -->
-                                <path class="crayon-arrow-path" d="M 0 52 C 10 30, 40 10, 80 8" fill="none" stroke="#e03030" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                <!-- arrowhead -->
-                                <path class="crayon-arrowhead" d="M 80 8 L 68 4 M 80 8 L 75 18" fill="none" stroke="#e03030" stroke-width="2.5" stroke-linecap="round"/>
-                                <!-- label sits right of the arrowhead tip -->
-                                <text class="crayon-label" x="87" y="12" text-anchor="start" fill="#e03030" font-family="Caveat, cursive" font-size="32" font-weight="700">surviving</text>
-                            </svg>
-                        </span> my Bachelor's degree in Mechanical Engineering at the University of Warwick. So far, I've learnt just how much caffeine the human body can withstand <strong>and</strong> the importance of saving CAD files <em>frequently</em>, <strong>before</strong> it inevitably crashes.
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="h-px w-8 bg-eng-500"></span>
+                        <span class="text-eng-500 font-bold uppercase tracking-wider text-sm">About Me</span>
+                    </div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6">Mechanical Engineering Student</h2>
+                    <p class="text-slate-600 dark:text-slate-300 mb-6 text-lg leading-relaxed">
+                        My name is Neal Batchelor and I am currently pursuing a Bachelors degree in Mechanical Engineering at the University of Warwick.
                     </p>
-                    <p class="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
-                        I possess a mild obsession with motorsport and Formula 1 and you'll often find me karting. Because actual F1 cars are <em>slightly</em> out of my student budget, I recently settled on building my own custom racing simulator.<sup>*</sup>
+                    <p class="text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
+                        I have a strong passion for motorsport and am an avid F1 fan. I am an active karting competitor and have recently built a
+custom racing simulator. Outside of engineering-focused hobbies, I enjoy rock climbing and play both the flute and
+saxophone, having volunteered in a local community orchestra and band.
                     </p>
-                    <p class="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
-                        When I'm not plotting away on MATLAB, I enjoy rock climbing and hiking. I also play the flute and saxophone<sup>**</sup>, having volunteered in a local<span class="sticky-tab" id="sticky-tab" aria-expanded="false"><span class="sticky-tab-closed">note</span><span class="sticky-tab-expanded">This was largely to prove to potential employers that I do in fact possess soft skills, and can <em>occasionally</em> leave my CAD models to interact with society.</span></span> community orchestra and band.
-                    </p>
-                    <div class="mt-8">
-                        <hr class="border-0 border-t border-slate-200 dark:border-slate-700 w-16 mb-4" style="opacity: 0.5;">
-                        <div class="text-slate-500 dark:text-slate-400 mb-8 text-sm flex flex-col" style="line-height: 1.4;">
-                            <span class="flex items-baseline gap-1"><sup class="inline-block w-4 shrink-0">*</sup><span>All to get beaten by a 12-year-old with an Xbox controller</span></span>
-                            <span class="flex items-baseline gap-1"><sup class="inline-block w-4 shrink-0">**</sup><span>Fluid dynamics in practice</span></span>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex items-center gap-3">
+                            <div class="p-2 bg-eng-50 dark:bg-slate-800 rounded-lg text-eng-600 dark:text-eng-400">
+                                <i data-lucide="award" class="w-5 h-5"></i>
+                            </div>
+                            <span class="font-medium text-slate-700 dark:text-slate-200">BEng Mechanical Engineering</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="p-2 bg-eng-50 dark:bg-slate-800 rounded-lg text-eng-600 dark:text-eng-400">
+                                <i data-lucide="cpu" class="w-5 h-5"></i>
+                            </div>
+                            <span class="font-medium text-slate-700 dark:text-slate-200">MATLAB & Data Analytics</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="p-2 bg-eng-50 dark:bg-slate-800 rounded-lg text-eng-600 dark:text-eng-400">
+                                <i data-lucide="box" class="w-5 h-5"></i>
+                            </div>
+                            <span class="font-medium text-slate-700 dark:text-slate-200">3D Modelling - Fusion 360</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="p-2 bg-eng-50 dark:bg-slate-800 rounded-lg text-eng-600 dark:text-eng-400">
+                                <i data-lucide="zap" class="w-5 h-5"></i>
+                            </div>
+                            <span class="font-medium text-slate-700 dark:text-slate-200">Design Sprints</span>
                         </div>
                     </div>
 
                     <!-- opens CV preview modal -->
-<div class="mt-10 flex flex-wrap items-center gap-3">
+<div class="mt-10">
     <button id="open-cv-modal" class="btn-liquid-bounce magnetic-btn text-eng-600 dark:text-eng-400 font-bold hover:text-eng-800 inline-flex items-center gap-2 px-4 py-2 border-2 border-eng-600 dark:border-eng-400 rounded-lg transition-colors hover:bg-eng-50 dark:hover:bg-slate-800">
         View Resume / CV
         <i data-lucide="file-text" class="w-4 h-4"></i>
-    </button>
-    <button id="open-personal-modal" class="btn-liquid-bounce magnetic-btn text-slate-600 dark:text-slate-300 font-bold inline-flex items-center gap-2 px-4 py-2 border-2 border-slate-300 dark:border-slate-600 rounded-lg transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-slate-400 dark:hover:border-slate-500">
-        More from the human behind the CAD
-        <i data-lucide="arrow-right" class="w-4 h-4"></i>
     </button>
 </div>
                 </div>
@@ -1347,54 +1229,6 @@
         </div>
         <div class="flex-1 overflow-hidden rounded-b-3xl">
             <iframe src="./Neal Batchelor.pdf" class="w-full h-full border-0 rounded-b-3xl" title="Neal Batchelor CV"></iframe>
-        </div>
-    </div>
-</div>
-
-<!-- modal: personal / human side -->
-<div id="modal-personal" class="project-modal fixed inset-0 z-[100] hidden flex items-center justify-center p-4 sm:p-6">
-    <div class="modal-backdrop absolute inset-0 bg-slate-900/60 backdrop-blur-md"></div>
-    <div class="modal-content-box relative w-full max-w-lg bg-white dark:bg-slate-800 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-y-auto" style="max-height: 90vh;">
-        <!-- header -->
-        <div class="sticky top-0 z-10 flex justify-between items-center p-6 bg-white/90 dark:bg-slate-800/90 backdrop-blur border-b border-slate-100 dark:border-slate-700 rounded-t-3xl">
-            <div>
-                <h2 class="text-xl font-bold text-slate-900 dark:text-white">The human behind the CAD</h2>
-                <span class="text-eng-500 font-bold uppercase tracking-wider text-xs">A few things not on the CV</span>
-            </div>
-            <button id="close-personal-modal" class="p-2 bg-slate-100 dark:bg-slate-700 rounded-full hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
-                <i data-lucide="x" class="w-5 h-5 text-slate-600 dark:text-slate-300"></i>
-            </button>
-        </div>
-        <!-- body -->
-        <div class="p-6 space-y-5 text-slate-600 dark:text-slate-300 leading-relaxed">
-            <div class="flex gap-4 items-start">
-                <span class="text-2xl">🏎️</span>
-                <div>
-                    <p class="font-semibold text-slate-800 dark:text-white mb-1">Motorsport obsessive</p>
-                    <p class="text-sm">I've watched enough onboard footage to have strong opinions about corner entry. I kart competitively and built my own simulator — partly for lap time, mostly for the excuse to buy more screens.</p>
-                </div>
-            </div>
-            <div class="flex gap-4 items-start">
-                <span class="text-2xl">🧗</span>
-                <div>
-                    <p class="font-semibold text-slate-800 dark:text-white mb-1">Rock climber & hiker</p>
-                    <p class="text-sm">The only acceptable reason to close the laptop. I find routes harder than my coursework, which is either motivating or deeply concerning.</p>
-                </div>
-            </div>
-            <div class="flex gap-4 items-start">
-                <span class="text-2xl">🎷</span>
-                <div>
-                    <p class="font-semibold text-slate-800 dark:text-white mb-1">Flute & saxophone</p>
-                    <p class="text-sm">I've played in a community orchestra and band. It turns out fluid dynamics is useful beyond just pipe flow — who knew.</p>
-                </div>
-            </div>
-            <div class="flex gap-4 items-start">
-                <span class="text-2xl">☕</span>
-                <div>
-                    <p class="font-semibold text-slate-800 dark:text-white mb-1">Caffeine researcher</p>
-                    <p class="text-sm">Three years of Mechanical Engineering have pushed my caffeine tolerance well beyond anything documented in the literature. I consider this applied biomechanics.</p>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -2108,22 +1942,6 @@ const cvModal    = document.getElementById('modal-cv');
 const cvContent  = cvModal.querySelector('.modal-content-box');
 const cvBackdrop = cvModal.querySelector('.modal-backdrop');
 
-// Sticky note tab toggle
-const stickyTab = document.getElementById('sticky-tab');
-if (stickyTab) {
-    stickyTab.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const open = stickyTab.classList.toggle('is-open');
-        stickyTab.setAttribute('aria-expanded', open);
-    });
-    document.addEventListener('click', (e) => {
-        if (!stickyTab.contains(e.target)) {
-            stickyTab.classList.remove('is-open');
-            stickyTab.setAttribute('aria-expanded', 'false');
-        }
-    });
-}
-
 document.getElementById('open-cv-modal').addEventListener('click', () => {
     cvModal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
@@ -2144,34 +1962,6 @@ document.getElementById('close-cv-modal').addEventListener('click', () => {
 
 cvBackdrop.addEventListener('click', () => {
     document.getElementById('close-cv-modal').click();
-});
-
-// Personal modal
-const personalModal    = document.getElementById('modal-personal');
-const personalContent  = personalModal.querySelector('.modal-content-box');
-const personalBackdrop = personalModal.querySelector('.modal-backdrop');
-
-document.getElementById('open-personal-modal').addEventListener('click', () => {
-    personalModal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-    lucide.createIcons();
-    gsap.fromTo(personalBackdrop, { opacity: 0 }, { opacity: 1, duration: 0.4 });
-    gsap.fromTo(personalContent,
-        { opacity: 0, y: 50, scale: 0.95 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: 'back.out(1.2)' }
-    );
-});
-
-document.getElementById('close-personal-modal').addEventListener('click', () => {
-    gsap.to(personalContent,  { opacity: 0, y: 30, scale: 0.95, duration: 0.3, ease: 'power2.in' });
-    gsap.to(personalBackdrop, { opacity: 0, duration: 0.3, delay: 0.1, onComplete: () => {
-        personalModal.classList.add('hidden');
-        document.body.style.overflow = '';
-    }});
-});
-
-personalBackdrop.addEventListener('click', () => {
-    document.getElementById('close-personal-modal').click();
 });
 
 // NB monogram expand to Neal Batchelor on hover
@@ -2287,10 +2077,6 @@ closeBtns.forEach(btn => {
         });
     });
 });
-</script>
-
-<script>
-    // Size the crayon strikethrough to exactly match the word width
 </script>
 
 </body>
